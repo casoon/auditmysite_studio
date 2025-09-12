@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Network access for web audit functionality -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+    
+    <!-- File system access for reading/writing audit reports -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+    
+    <!-- Allow reading from download folder for opening audit files -->
+    <key>com.apple.security.files.downloads.read-write</key>
+    <true/>
+    
+    <!-- Disable library validation for Flutter plugins -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+    
+    <!-- Allow unsigned executable memory for Flutter JIT -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+    
+    <!-- Hardened runtime -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    
+    <!-- Allow dyld environment variables -->
+    <key>com.apple.security.cs.allow-dyld-environment-variables</key>
+    <true/>
+    
+    <!-- Camera access if QR code scanning is needed -->
+    <key>com.apple.security.device.camera</key>
+    <true/>
+    
+    <!-- Microphone access if voice features are added -->
+    <key>com.apple.security.device.microphone</key>
+    <false/>
+    
+    <!-- Location access if geo-auditing features are added -->
+    <key>com.apple.security.personal-information.location</key>
+    <false/>
+    
+    <!-- Print access for audit reports -->
+    <key>com.apple.security.print</key>
+    <true/>
+</dict>
+</plist>

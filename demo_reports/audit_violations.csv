@@ -1,0 +1,4 @@
+URL,Rule ID,Impact,Description,Help,Target
+"https://example.com","color-contrast","serious","Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds","Elements must have sufficient color contrast","p:nth-child(1)"
+"https://example.com","image-alt","critical","Ensures <img> elements have alternate text or a role of none or presentation","Images must have alternate text","img:nth-child(2)"
+"https://example.com/about","heading-order","moderate","Ensures the order of headings is semantically correct","Heading levels should only increase by one","h3"

@@ -1,0 +1,156 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version'
+        required: true
+        default: 'dev'
+
+env:
+  FLUTTER_VERSION: '3.24.0'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          brew install create-dmg
+          pip install pyinstaller
+          
+      - name: Build all components
+        run: |
+          chmod +x scripts/build_all.sh
+          ./scripts/build_all.sh ${{ github.event.inputs.version || 'dev' }}
+          
+      # Code signing only runs if certificates are available
+      - name: Import certificates
+        if: ${{ secrets.DEVELOPER_ID_APPLICATION_P12 }}
+        env:
+          DEVELOPER_ID_APPLICATION_P12: ${{ secrets.DEVELOPER_ID_APPLICATION_P12 }}
+          DEVELOPER_ID_APPLICATION_PASSWORD: ${{ secrets.DEVELOPER_ID_APPLICATION_PASSWORD }}
+        run: |
+          # Create temporary keychain
+          security create-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          
+          # Import certificates
+          echo "$DEVELOPER_ID_APPLICATION_P12" | base64 --decode > certificate.p12
+          security import certificate.p12 -k build.keychain -P "$DEVELOPER_ID_APPLICATION_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "${{ secrets.KEYCHAIN_PASSWORD }}" build.keychain
+          
+      - name: Sign macOS app
+        if: ${{ secrets.DEVELOPER_ID_APPLICATION_P12 }}
+        env:
+          DEVELOPER_ID_APPLICATION: ${{ secrets.DEVELOPER_ID_APPLICATION }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          NOTARIZE_USERNAME: ${{ secrets.NOTARIZE_USERNAME }}
+          NOTARIZE_PASSWORD: ${{ secrets.NOTARIZE_PASSWORD }}
+        run: |
+          chmod +x scripts/sign_macos.sh
+          ./scripts/sign_macos.sh
+          
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-release
+          path: |
+            release/macos/
+            dist/
+            
+      - name: Cleanup keychain
+        if: always()
+        run: |
+          security delete-keychain build.keychain || true
+          rm -f certificate.p12
+
+  build-windows:
+    runs-on: windows-latest
+    # Similar setup for Windows builds...
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          
+      - name: Build Windows app
+        run: |
+          cd auditmysite_studio
+          flutter build windows --release
+          
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-release
+          path: auditmysite_studio/build/windows/x64/runner/Release/
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev
+          
+      - name: Build Linux app
+        run: |
+          cd auditmysite_studio
+          flutter build linux --release
+          
+      - name: Upload Linux artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-release
+          path: auditmysite_studio/build/linux/x64/release/bundle/
+
+  create-release:
+    needs: [build-macos, build-windows, build-linux]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            **/*.app
+            **/*.dmg
+            **/*.exe
+            **/*.deb
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

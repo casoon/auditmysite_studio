@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Audit Report</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6; 
+      color: #333; 
+      background: #f8f9fa;
+    }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .header { 
+      background: linear-gradient(135deg, #007acc, #0066aa);
+      color: white; 
+      padding: 32px 0;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 10px rgba(0, 122, 204, 0.1);
+    }
+    .header h1 { font-size: 2rem; font-weight: 600; }
+    .header .meta { opacity: 0.9; margin-top: 8px; }
+
+    /* Navigation */
+    .nav { 
+      margin: 24px 0; 
+      display: flex; 
+      gap: 16px; 
+      flex-wrap: wrap;
+    }
+    .nav a { 
+      color: #007acc; 
+      text-decoration: none; 
+      padding: 8px 16px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+    .nav a:hover { 
+      text-decoration: none; 
+      background: #007acc;
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* Cards */
+    .card { 
+      background: white; 
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 16px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e9ecef;
+    }
+    .card h2 { color: #495057; margin-bottom: 16px; font-size: 1.25rem; }
+    .card h3 { color: #6c757d; margin-bottom: 12px; font-size: 1.1rem; }
+
+    /* Tables */
+    .table-container { overflow-x: auto; margin: 16px 0; }
+    table { 
+      border-collapse: collapse; 
+      width: 100%; 
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    th, td { 
+      padding: 12px 16px; 
+      text-align: left; 
+      border-bottom: 1px solid #dee2e6;
+    }
+    th { 
+      background: #f8f9fa; 
+      font-weight: 600; 
+      color: #495057;
+      position: sticky;
+      top: 0;
+    }
+    tr:hover { background: #f8f9fa; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Links */
+    a { color: #007acc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Utilities */
+    .text-center { text-align: center; }
+    .text-muted { color: #6c757d; }
+    .mt-3 { margin-top: 1rem; }
+    .mb-3 { margin-bottom: 1rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+      .header h1 { font-size: 1.5rem; }
+      th, td { padding: 8px 12px; font-size: 0.9rem; }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>Demo Audit Report</h1>
+      <div class="meta">Generiert am 2025-09-11 23:28:03</div>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    
+<div class="card">
+  <h2>Audit Zusammenfassung</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+    <div style="text-align: center; padding: 16px; background: #e8f4f8; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #007acc;">2</div>
+      <div>Seiten analysiert</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #fff3cd; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #856404;">3</div>
+      <div>Violations gesamt</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #d4edda; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #155724;">100%</div>
+      <div>Erfolgsrate (2xx)</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #f8d7da; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #721c24;">1111ms</div>
+      <div>⌀ LCP</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Filter & Suche</h2>
+  <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: end;">
+    <div>
+      <label for="search" style="display: block; margin-bottom: 4px; font-weight: 500;">URL Suche:</label>
+      <input type="text" id="search" placeholder="Filter nach URL..." 
+             style="width: 100%; padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+    </div>
+    <div>
+      <label for="status-filter" style="display: block; margin-bottom: 4px; font-weight: 500;">Status:</label>
+      <select id="status-filter" style="padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+        <option value="">Alle</option>
+        <option value="200">200 (OK)</option>
+        <option value="404">404 (Not Found)</option>
+        <option value="500">5xx (Server Error)</option>
+      </select>
+    </div>
+    <div>
+      <label for="violation-filter" style="display: block; margin-bottom: 4px; font-weight: 500;">Violations:</label>
+      <select id="violation-filter" style="padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+        <option value="">Alle</option>
+        <option value="0">Keine (0)</option>
+        <option value="1-5">Wenige (1-5)</option>
+        <option value="6+">Viele (6+)</option>
+      </select>
+    </div>
+    <button onclick="clearFilters()" 
+            style="padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      Reset
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Seiten (<span id="visible-count">2</span>/2)</h2>
+  <div class="table-container">
+    <table id="pages-table">
+      <thead>
+        <tr>
+          <th style="cursor: pointer;" onclick="sortTable(0)">URL ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(1)">Status ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(2)">Violations ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(3)">Max Impact ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(4)">TTFB (ms) ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(5)">LCP (ms) ↕</th>
+        </tr>
+      </thead>
+      <tbody>
+                <tr>
+          <td><a href="pages/https___example_com.html">https://example.com</a></td>
+          <td><span style="color: #28a745; font-weight: 600;">200</span></td>
+          <td><span style="color: #ffc107; font-weight: 600;">2</span></td>
+          <td><span style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">critical</span></td>
+          <td>181</td>
+          <td>1241</td>
+        </tr>
+      
+        <tr>
+          <td><a href="pages/https___example_com_about.html">https://example.com/about</a></td>
+          <td><span style="color: #28a745; font-weight: 600;">200</span></td>
+          <td><span style="color: #ffc107; font-weight: 600;">1</span></td>
+          <td><span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">moderate</span></td>
+          <td>95</td>
+          <td>980</td>
+        </tr>
+      
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Search and Filter functionality
+let allRows = [];
+let currentSort = { column: -1, ascending: true };
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tbody = document.querySelector('#pages-table tbody');
+  allRows = Array.from(tbody.querySelectorAll('tr'));
+  
+  // Setup event listeners
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('status-filter').addEventListener('change', applyFilters);
+  document.getElementById('violation-filter').addEventListener('change', applyFilters);
+});
+
+function applyFilters() {
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  const statusFilter = document.getElementById('status-filter').value;
+  const violationFilter = document.getElementById('violation-filter').value;
+  
+  let visibleCount = 0;
+  
+  allRows.forEach(row => {
+    const url = row.cells[0].textContent.toLowerCase();
+    const status = row.cells[1].textContent;
+    const violations = parseInt(row.cells[2].textContent) || 0;
+    
+    let visible = true;
+    
+    // Search filter
+    if (searchTerm && !url.includes(searchTerm)) {
+      visible = false;
+    }
+    
+    // Status filter
+    if (statusFilter && status !== statusFilter) {
+      if (statusFilter === '500' && !status.startsWith('5')) {
+        visible = false;
+      } else if (statusFilter !== '500' && status !== statusFilter) {
+        visible = false;
+      }
+    }
+    
+    // Violation filter
+    if (violationFilter) {
+      if (violationFilter === '0' && violations !== 0) {
+        visible = false;
+      } else if (violationFilter === '1-5' && (violations < 1 || violations > 5)) {
+        visible = false;
+      } else if (violationFilter === '6+' && violations < 6) {
+        visible = false;
+      }
+    }
+    
+    row.style.display = visible ? '' : 'none';
+    if (visible) visibleCount++;
+  });
+  
+  document.getElementById('visible-count').textContent = visibleCount;
+}
+
+function clearFilters() {
+  document.getElementById('search').value = '';
+  document.getElementById('status-filter').value = '';
+  document.getElementById('violation-filter').value = '';
+  applyFilters();
+}
+
+function sortTable(columnIndex) {
+  const tbody = document.querySelector('#pages-table tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
+  
+  // Toggle sort direction
+  if (currentSort.column === columnIndex) {
+    currentSort.ascending = !currentSort.ascending;
+  } else {
+    currentSort.column = columnIndex;
+    currentSort.ascending = true;
+  }
+  
+  rows.sort((a, b) => {
+    let aVal = a.cells[columnIndex].textContent.trim();
+    let bVal = b.cells[columnIndex].textContent.trim();
+    
+    // Handle numeric columns
+    if (columnIndex >= 2 && columnIndex <= 5) {
+      aVal = parseFloat(aVal) || 0;
+      bVal = parseFloat(bVal) || 0;
+    }
+    
+    if (aVal < bVal) return currentSort.ascending ? -1 : 1;
+    if (aVal > bVal) return currentSort.ascending ? 1 : -1;
+    return 0;
+  });
+  
+  // Re-append sorted visible rows
+  const allRowsArray = Array.from(tbody.querySelectorAll('tr'));
+  const hiddenRows = allRowsArray.filter(row => row.style.display === 'none');
+  
+  tbody.innerHTML = '';
+  rows.forEach(row => tbody.appendChild(row));
+  hiddenRows.forEach(row => tbody.appendChild(row));
+}
+</script>
+
+
+  </div>
+
+  
+</body>
+</html>

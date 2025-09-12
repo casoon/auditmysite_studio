@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # AuditMySite Engine - Core audit processing engine
+  auditmysite-engine:
+    build:
+      context: ./auditmysite_engine
+      dockerfile: Dockerfile
+    container_name: auditmysite-engine
+    ports:
+      - "3000:3000"
+    environment:
+      - LOG_LEVEL=info
+      - CHROME_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage
+    volumes:
+      - audit_artifacts:/app/artifacts
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - auditmysite-net
+
+  # Redis for caching (optional enhancement)
+  redis:
+    image: redis:7-alpine
+    container_name: auditmysite-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - auditmysite-net
+    profiles:
+      - "full"
+      
+  # Nginx reverse proxy for production deployment
+  nginx:
+    image: nginx:alpine
+    container_name: auditmysite-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - audit_artifacts:/usr/share/nginx/html/reports:ro
+    depends_on:
+      - auditmysite-engine
+    restart: unless-stopped
+    networks:
+      - auditmysite-net
+    profiles:
+      - "production"
+
+volumes:
+  # Persistent storage for audit artifacts
+  audit_artifacts:
+    driver: local
+    
+  # Redis data persistence
+  redis_data:
+    driver: local
+
+networks:
+  auditmysite-net:
+    driver: bridge
+    
+# Development override
+# Create docker-compose.override.yml for development settings

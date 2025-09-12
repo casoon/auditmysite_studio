@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "demo_perfect_001",
+  "url": "https://example.com/",
+  "title": "Perfect Example Site - Demo",
+  "status": "passed",
+  "duration": 1200,
+  "auditedAt": "2025-01-11T21:44:24Z",
+  
+  "accessibility": {
+    "passed": true,
+    "wcagLevel": "AAA",
+    "score": 98,
+    "errors": [],
+    "warnings": [
+      {
+        "severity": "warning",
+        "message": "Minor contrast improvement suggested on footer links",
+        "code": "color-contrast-enhanced",
+        "selector": "footer a"
+      }
+    ],
+    "notices": [],
+    "pa11yResults": {
+      "totalIssues": 1,
+      "runner": "axe-core@4.7.0"
+    }
+  },
+  
+  "performance": {
+    "score": 95,
+    "grade": "A",
+    "coreWebVitals": {
+      "largestContentfulPaint": 1800,
+      "firstContentfulPaint": 900,
+      "cumulativeLayoutShift": 0.05,
+      "interactionToNextPaint": 150,
+      "timeToFirstByte": 600
+    },
+    "metrics": {
+      "domContentLoaded": 1100,
+      "loadComplete": 1800,
+      "firstPaint": 850,
+      "redirectTime": 0,
+      "dnsTime": 45,
+      "connectTime": 120
+    },
+    "issues": []
+  },
+  
+  "seo": {
+    "score": 92,
+    "grade": "A",
+    "metaTags": {
+      "title": {
+        "content": "Perfect Example Site - Best Practices Demo",
+        "length": 44,
+        "optimal": true
+      },
+      "description": {
+        "content": "This is a demonstration website showcasing perfect SEO practices with optimal title length, meta description, heading structure and image alt text implementation.",
+        "length": 155,
+        "optimal": true
+      },
+      "canonical": "https://example.com/",
+      "openGraph": {
+        "title": "Perfect Example Site - Best Practices Demo",
+        "description": "Demo website with perfect SEO implementation",
+        "image": "https://example.com/og-image.jpg",
+        "url": "https://example.com/"
+      },
+      "twitterCard": {
+        "card": "summary_large_image",
+        "title": "Perfect Example Site",
+        "description": "Demo with perfect SEO"
+      }
+    },
+    "headings": {
+      "h1": ["Perfect Example Site"],
+      "h2": ["About Us", "Our Services", "Contact"],
+      "h3": ["Web Development", "SEO Optimization", "Performance Tuning"],
+      "issues": []
+    },
+    "images": {
+      "total": 8,
+      "missingAlt": 0,
+      "emptyAlt": 1
+    },
+    "issues": [
+      {
+        "type": "image-alt-empty",
+        "severity": "warning", 
+        "message": "1 images have empty alt attributes. Consider adding descriptive alt text or use alt=\"\" only for decorative images.",
+        "selector": "img[alt=\"\"]"
+      }
+    ]
+  },
+  
+  "http": {
+    "statusCode": 200,
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "server": "nginx/1.18.0",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff"
+    }
+  },
+  
+  "consoleErrors": [],
+  "screenshotPath": null,
+  "startedAt": "2025-01-11T21:44:20Z",
+  "finishedAt": "2025-01-11T21:44:24Z"
+}

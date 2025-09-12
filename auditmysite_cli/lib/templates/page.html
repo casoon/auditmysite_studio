@@ -1,0 +1,59 @@
+{{content_start}}
+<div class="nav">
+  <a href="../index.html">← Zurück zur Übersicht</a>
+</div>
+
+<div class="card">
+  <h2>Seiteninformationen</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+    <div>
+      <strong>Status:</strong> 
+      <span style="{{status_style}}">{{status_code}}</span>
+    </div>
+    <div>
+      <strong>Gestartet:</strong> {{started_at}}
+    </div>
+    <div>
+      <strong>Fertiggestellt:</strong> {{finished_at}}
+    </div>
+    <div>
+      <strong>Verarbeitungszeit:</strong> {{duration}}
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Performance Metriken</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: {{ttfb_color}};">{{ttfb_ms}}</div>
+      <div style="font-weight: 500; color: #6c757d;">TTFB (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">Time to First Byte</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: {{fcp_color}};">{{fcp_ms}}</div>
+      <div style="font-weight: 500; color: #6c757d;">FCP (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">First Contentful Paint</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: {{lcp_color}};">{{lcp_ms}}</div>
+      <div style="font-weight: 500; color: #6c757d;">LCP (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">Largest Contentful Paint</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: #495057;">{{dcl_ms}}</div>
+      <div style="font-weight: 500; color: #6c757d;">DCL (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">DOMContentLoaded</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Accessibility Audit (axe-core)</h2>
+  {{accessibility_content}}
+</div>
+
+{{console_errors_section}}
+
+{{screenshot_section}}
+{{content_end}}

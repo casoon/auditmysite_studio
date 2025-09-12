@@ -1,0 +1,182 @@
+{{content_start}}
+<div class="card">
+  <h2>Audit Zusammenfassung</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+    <div style="text-align: center; padding: 16px; background: #e8f4f8; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #007acc;">{{total_pages}}</div>
+      <div>Seiten analysiert</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #fff3cd; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #856404;">{{total_violations}}</div>
+      <div>Violations gesamt</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #d4edda; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #155724;">{{success_rate}}%</div>
+      <div>Erfolgsrate (2xx)</div>
+    </div>
+    <div style="text-align: center; padding: 16px; background: #f8d7da; border-radius: 8px;">
+      <div style="font-size: 2rem; font-weight: bold; color: #721c24;">{{avg_lcp}}ms</div>
+      <div>⌀ LCP</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Filter & Suche</h2>
+  <div style="display: grid; grid-template-columns: 1fr auto auto auto; gap: 12px; align-items: end;">
+    <div>
+      <label for="search" style="display: block; margin-bottom: 4px; font-weight: 500;">URL Suche:</label>
+      <input type="text" id="search" placeholder="Filter nach URL..." 
+             style="width: 100%; padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+    </div>
+    <div>
+      <label for="status-filter" style="display: block; margin-bottom: 4px; font-weight: 500;">Status:</label>
+      <select id="status-filter" style="padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+        <option value="">Alle</option>
+        <option value="200">200 (OK)</option>
+        <option value="404">404 (Not Found)</option>
+        <option value="500">5xx (Server Error)</option>
+      </select>
+    </div>
+    <div>
+      <label for="violation-filter" style="display: block; margin-bottom: 4px; font-weight: 500;">Violations:</label>
+      <select id="violation-filter" style="padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 6px;">
+        <option value="">Alle</option>
+        <option value="0">Keine (0)</option>
+        <option value="1-5">Wenige (1-5)</option>
+        <option value="6+">Viele (6+)</option>
+      </select>
+    </div>
+    <button onclick="clearFilters()" 
+            style="padding: 8px 16px; background: #6c757d; color: white; border: none; border-radius: 6px; cursor: pointer;">
+      Reset
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Seiten (<span id="visible-count">{{total_pages}}</span>/{{total_pages}})</h2>
+  <div class="table-container">
+    <table id="pages-table">
+      <thead>
+        <tr>
+          <th style="cursor: pointer;" onclick="sortTable(0)">URL ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(1)">Status ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(2)">Violations ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(3)">Max Impact ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(4)">TTFB (ms) ↕</th>
+          <th style="cursor: pointer;" onclick="sortTable(5)">LCP (ms) ↕</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{table_rows}}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+// Search and Filter functionality
+let allRows = [];
+let currentSort = { column: -1, ascending: true };
+
+document.addEventListener('DOMContentLoaded', function() {
+  const tbody = document.querySelector('#pages-table tbody');
+  allRows = Array.from(tbody.querySelectorAll('tr'));
+  
+  // Setup event listeners
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('status-filter').addEventListener('change', applyFilters);
+  document.getElementById('violation-filter').addEventListener('change', applyFilters);
+});
+
+function applyFilters() {
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  const statusFilter = document.getElementById('status-filter').value;
+  const violationFilter = document.getElementById('violation-filter').value;
+  
+  let visibleCount = 0;
+  
+  allRows.forEach(row => {
+    const url = row.cells[0].textContent.toLowerCase();
+    const status = row.cells[1].textContent;
+    const violations = parseInt(row.cells[2].textContent) || 0;
+    
+    let visible = true;
+    
+    // Search filter
+    if (searchTerm && !url.includes(searchTerm)) {
+      visible = false;
+    }
+    
+    // Status filter
+    if (statusFilter && status !== statusFilter) {
+      if (statusFilter === '500' && !status.startsWith('5')) {
+        visible = false;
+      } else if (statusFilter !== '500' && status !== statusFilter) {
+        visible = false;
+      }
+    }
+    
+    // Violation filter
+    if (violationFilter) {
+      if (violationFilter === '0' && violations !== 0) {
+        visible = false;
+      } else if (violationFilter === '1-5' && (violations < 1 || violations > 5)) {
+        visible = false;
+      } else if (violationFilter === '6+' && violations < 6) {
+        visible = false;
+      }
+    }
+    
+    row.style.display = visible ? '' : 'none';
+    if (visible) visibleCount++;
+  });
+  
+  document.getElementById('visible-count').textContent = visibleCount;
+}
+
+function clearFilters() {
+  document.getElementById('search').value = '';
+  document.getElementById('status-filter').value = '';
+  document.getElementById('violation-filter').value = '';
+  applyFilters();
+}
+
+function sortTable(columnIndex) {
+  const tbody = document.querySelector('#pages-table tbody');
+  const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.style.display !== 'none');
+  
+  // Toggle sort direction
+  if (currentSort.column === columnIndex) {
+    currentSort.ascending = !currentSort.ascending;
+  } else {
+    currentSort.column = columnIndex;
+    currentSort.ascending = true;
+  }
+  
+  rows.sort((a, b) => {
+    let aVal = a.cells[columnIndex].textContent.trim();
+    let bVal = b.cells[columnIndex].textContent.trim();
+    
+    // Handle numeric columns
+    if (columnIndex >= 2 && columnIndex <= 5) {
+      aVal = parseFloat(aVal) || 0;
+      bVal = parseFloat(bVal) || 0;
+    }
+    
+    if (aVal < bVal) return currentSort.ascending ? -1 : 1;
+    if (aVal > bVal) return currentSort.ascending ? 1 : -1;
+    return 0;
+  });
+  
+  // Re-append sorted visible rows
+  const allRowsArray = Array.from(tbody.querySelectorAll('tr'));
+  const hiddenRows = allRowsArray.filter(row => row.style.display === 'none');
+  
+  tbody.innerHTML = '';
+  rows.forEach(row => tbody.appendChild(row));
+  hiddenRows.forEach(row => tbody.appendChild(row));
+}
+</script>
+{{content_end}}

@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "demo_poor_001",
+  "url": "https://slowsite.example/blog/article",
+  "title": "Slow Site Example",
+  "status": "failed",
+  "duration": 8500,
+  "auditedAt": "2025-01-11T21:44:24Z",
+  
+  "accessibility": {
+    "passed": false,
+    "wcagLevel": "none",
+    "score": 32,
+    "errors": [
+      {
+        "severity": "error",
+        "message": "Images must have alternate text",
+        "code": "image-alt",
+        "selector": "img:nth-child(1)",
+        "context": "<img src=\"hero.jpg\">"
+      },
+      {
+        "severity": "error", 
+        "message": "Form elements must have labels",
+        "code": "label",
+        "selector": "input[type=\"text\"]"
+      },
+      {
+        "severity": "error",
+        "message": "Page must have a level-one heading",
+        "code": "page-has-heading-one"
+      }
+    ],
+    "warnings": [
+      {
+        "severity": "warning",
+        "message": "Elements must have sufficient color contrast",
+        "code": "color-contrast",
+        "selector": ".gray-text"
+      },
+      {
+        "severity": "warning",
+        "message": "Links must have discernible text",
+        "code": "link-name",
+        "selector": "a:nth-child(3)"
+      }
+    ],
+    "notices": [
+      {
+        "severity": "notice",
+        "message": "Consider using semantic HTML elements",
+        "code": "region"
+      }
+    ],
+    "pa11yResults": {
+      "totalIssues": 6,
+      "runner": "axe-core@4.7.0"
+    }
+  },
+  
+  "performance": {
+    "score": 28,
+    "grade": "F",
+    "coreWebVitals": {
+      "largestContentfulPaint": 6800,
+      "firstContentfulPaint": 4200,
+      "cumulativeLayoutShift": 0.45,
+      "interactionToNextPaint": 890,
+      "timeToFirstByte": 2400
+    },
+    "metrics": {
+      "domContentLoaded": 5200,
+      "loadComplete": 8500,
+      "firstPaint": 3800,
+      "redirectTime": 450,
+      "dnsTime": 320,
+      "connectTime": 680
+    },
+    "issues": [
+      {
+        "type": "lcp-slow",
+        "severity": "error",
+        "message": "Largest Contentful Paint is too slow (6800ms). Should be under 2500ms for good performance.",
+        "value": 6800,
+        "threshold": 2500
+      },
+      {
+        "type": "fcp-slow",
+        "severity": "error",
+        "message": "First Contentful Paint is too slow (4200ms). Should be under 1800ms for good performance.",
+        "value": 4200,
+        "threshold": 1800
+      },
+      {
+        "type": "cls-high",
+        "severity": "error",
+        "message": "Cumulative Layout Shift is too high (0.450). Should be under 0.1 for good performance.",
+        "value": 0.45,
+        "threshold": 0.1
+      },
+      {
+        "type": "ttfb-slow",
+        "severity": "error",
+        "message": "Time to First Byte is too slow (2400ms). Should be under 800ms for good performance.",
+        "value": 2400,
+        "threshold": 800
+      }
+    ]
+  },
+  
+  "seo": {
+    "score": 18,
+    "grade": "F",
+    "metaTags": {
+      "title": {
+        "content": "Blog",
+        "length": 4,
+        "optimal": false
+      },
+      "description": null,
+      "canonical": null,
+      "openGraph": {},
+      "twitterCard": {}
+    },
+    "headings": {
+      "h1": [],
+      "h2": ["Random Content", "More Stuff"],
+      "h3": [],
+      "issues": ["Missing H1 heading"]
+    },
+    "images": {
+      "total": 12,
+      "missingAlt": 8,
+      "emptyAlt": 2
+    },
+    "issues": [
+      {
+        "type": "title-short",
+        "severity": "warning",
+        "message": "Title is too short (4 characters). Should be between 30-60 characters for optimal SEO.",
+        "selector": "title"
+      },
+      {
+        "type": "description-missing",
+        "severity": "error",
+        "message": "Missing meta description. Every page should have a descriptive meta description.",
+        "selector": "meta[name=\"description\"]"
+      },
+      {
+        "type": "h1-missing",
+        "severity": "error",
+        "message": "Missing H1 heading. Every page should have exactly one H1 heading.",
+        "selector": "h1"
+      },
+      {
+        "type": "image-alt-missing",
+        "severity": "error",
+        "message": "8 images are missing alt attributes. All images should have descriptive alt text for accessibility and SEO.",
+        "selector": "img:not([alt])"
+      },
+      {
+        "type": "image-alt-empty",
+        "severity": "warning",
+        "message": "2 images have empty alt attributes. Consider adding descriptive alt text or use alt=\"\" only for decorative images.",
+        "selector": "img[alt=\"\"]"
+      }
+    ]
+  },
+  
+  "http": {
+    "statusCode": 200,
+    "headers": {
+      "content-type": "text/html",
+      "server": "Apache/2.4.41"
+    }
+  },
+  
+  "consoleErrors": [
+    "Uncaught TypeError: Cannot read property 'addEventListener' of null",
+    "Failed to load resource: the server responded with a status of 404 (Not Found) - missing.js",
+    "Mixed Content: The page was loaded over HTTPS, but requested an insecure image"
+  ],
+  "screenshotPath": null,
+  "startedAt": "2025-01-11T21:44:16Z",
+  "finishedAt": "2025-01-11T21:44:24Z"
+}

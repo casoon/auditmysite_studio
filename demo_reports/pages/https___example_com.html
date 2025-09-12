@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>https://example.com</title>
+  <style>
+    /* Reset & Base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6; 
+      color: #333; 
+      background: #f8f9fa;
+    }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    .header { 
+      background: linear-gradient(135deg, #007acc, #0066aa);
+      color: white; 
+      padding: 32px 0;
+      margin-bottom: 32px;
+      box-shadow: 0 2px 10px rgba(0, 122, 204, 0.1);
+    }
+    .header h1 { font-size: 2rem; font-weight: 600; }
+    .header .meta { opacity: 0.9; margin-top: 8px; }
+
+    /* Navigation */
+    .nav { 
+      margin: 24px 0; 
+      display: flex; 
+      gap: 16px; 
+      flex-wrap: wrap;
+    }
+    .nav a { 
+      color: #007acc; 
+      text-decoration: none; 
+      padding: 8px 16px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s;
+    }
+    .nav a:hover { 
+      text-decoration: none; 
+      background: #007acc;
+      color: white;
+      transform: translateY(-1px);
+    }
+
+    /* Cards */
+    .card { 
+      background: white; 
+      border-radius: 12px; 
+      padding: 24px; 
+      margin: 16px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e9ecef;
+    }
+    .card h2 { color: #495057; margin-bottom: 16px; font-size: 1.25rem; }
+    .card h3 { color: #6c757d; margin-bottom: 12px; font-size: 1.1rem; }
+
+    /* Tables */
+    .table-container { overflow-x: auto; margin: 16px 0; }
+    table { 
+      border-collapse: collapse; 
+      width: 100%; 
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    th, td { 
+      padding: 12px 16px; 
+      text-align: left; 
+      border-bottom: 1px solid #dee2e6;
+    }
+    th { 
+      background: #f8f9fa; 
+      font-weight: 600; 
+      color: #495057;
+      position: sticky;
+      top: 0;
+    }
+    tr:hover { background: #f8f9fa; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Links */
+    a { color: #007acc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Utilities */
+    .text-center { text-align: center; }
+    .text-muted { color: #6c757d; }
+    .mt-3 { margin-top: 1rem; }
+    .mb-3 { margin-bottom: 1rem; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+      .header h1 { font-size: 1.5rem; }
+      th, td { padding: 8px 12px; font-size: 0.9rem; }
+    }
+  </style>
+        <style>
+        .impact-critical { color: #dc3545; font-weight: 600; }
+        .impact-serious { color: #fd7e14; font-weight: 600; }
+        .impact-moderate { color: #ffc107; font-weight: 600; }
+        .impact-minor { color: #28a745; font-weight: 600; }
+        code { background: #f8f9fa; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+      </style>
+    
+</head>
+<body>
+  <div class="header">
+    <div class="container">
+      <h1>https://example.com</h1>
+      <div class="meta">Audit Details</div>
+    </div>
+  </div>
+
+  <div class="container">
+    
+    
+<div class="nav">
+  <a href="../index.html">← Zurück zur Übersicht</a>
+</div>
+
+<div class="card">
+  <h2>Seiteninformationen</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+    <div>
+      <strong>Status:</strong> 
+      <span style="color: #28a745; font-weight: 600;">200</span>
+    </div>
+    <div>
+      <strong>Gestartet:</strong> 2023-12-11 15:30:01
+    </div>
+    <div>
+      <strong>Fertiggestellt:</strong> 2023-12-11 15:30:03
+    </div>
+    <div>
+      <strong>Verarbeitungszeit:</strong> 2s
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Performance Metriken</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: #ffc107;">181</div>
+      <div style="font-weight: 500; color: #6c757d;">TTFB (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">Time to First Byte</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: #28a745;">890</div>
+      <div style="font-weight: 500; color: #6c757d;">FCP (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">First Contentful Paint</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: #28a745;">1241</div>
+      <div style="font-weight: 500; color: #6c757d;">LCP (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">Largest Contentful Paint</div>
+    </div>
+    <div style="text-align: center; padding: 20px; background: #f8f9fa; border-radius: 12px; border: 2px solid #dee2e6;">
+      <div style="font-size: 1.8rem; font-weight: bold; color: #495057;">1100</div>
+      <div style="font-weight: 500; color: #6c757d;">DCL (ms)</div>
+      <div style="font-size: 0.8rem; color: #868e96; margin-top: 4px;">DOMContentLoaded</div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Accessibility Audit (axe-core)</h2>
+          <div style="margin-bottom: 24px;">
+          <h3 style="color: #dc3545; margin-bottom: 12px;">
+            <span style="background: #dc3545; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">CRITICAL</span> 
+            (1)
+          </h3>
+                <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Rule ID</th>
+              <th>Hilfe</th>
+              <th>Beschreibung</th>
+              <th>Betroffene Elemente</th>
+            </tr>
+          </thead>
+          <tbody>
+                    <tr>
+          <td><code>image-alt</code></td>
+          <td>Images must have alternate text</td>
+          <td>Ensures &lt;img&gt; elements have alternate text or a role of none or presentation</td>
+          <td><span style="background: #e9ecef; padding: 2px 6px; border-radius: 4px;">1 Elemente</span></td>
+        </tr>
+      
+          </tbody>
+        </table>
+      </div>
+    
+        </div>
+      
+        <div style="margin-bottom: 24px;">
+          <h3 style="color: #fd7e14; margin-bottom: 12px;">
+            <span style="background: #fd7e14; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: 600;">SERIOUS</span> 
+            (1)
+          </h3>
+                <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Rule ID</th>
+              <th>Hilfe</th>
+              <th>Beschreibung</th>
+              <th>Betroffene Elemente</th>
+            </tr>
+          </thead>
+          <tbody>
+                    <tr>
+          <td><code>color-contrast</code></td>
+          <td>Elements must have sufficient color contrast</td>
+          <td>Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds</td>
+          <td><span style="background: #e9ecef; padding: 2px 6px; border-radius: 4px;">1 Elemente</span></td>
+        </tr>
+      
+          </tbody>
+        </table>
+      </div>
+    
+        </div>
+      
+</div>
+
+      <div class="card">
+        <h2 style="color: #dc3545;">Console Errors (1)</h2>
+        <div style="background: #f8d7da; border: 1px solid #f5c2c7; border-radius: 8px; padding: 16px;">
+          <ul style="margin: 0; padding-left: 20px;">
+            <li>Failed to load resource: the server responded with a status of 404 (Not Found)</li>
+          </ul>
+        </div>
+      </div>
+    
+
+      <div class="card">
+        <h2>Screenshot</h2>
+        <div style="text-align: center; background: #f8f9fa; padding: 16px; border-radius: 8px;">
+          <img src="../artifacts/screenshots/example_com.png" alt="Screenshot" 
+               style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        </div>
+      </div>
+    
+
+
+  </div>
+
+  
+</body>
+</html>

@@ -1,0 +1,38 @@
+# Dart/Flutter files
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime artifacts (will be created in container)
+artifacts/
+screenshots/
+*.json
+
+# Docker files
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README*.md
+docs/

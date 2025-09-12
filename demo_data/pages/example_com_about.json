@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "20231211-143022-demo",
+  "url": "https://example.com/about",
+  "http": {
+    "statusCode": 200,
+    "headers": {
+      "content-type": "text/html"
+    }
+  },
+  "perf": {
+    "ttfbMs": 95.3,
+    "fcpMs": 650.1,
+    "lcpMs": 980.4,
+    "domContentLoadedMs": 800.0,
+    "loadEventEndMs": 950.0,
+    "engine": {
+      "cpuUserMs": 32.1,
+      "cpuSystemMs": 8.5,
+      "peakRssBytes": 98765432,
+      "taskDurationMs": 1890.2
+    }
+  },
+  "a11y": {
+    "violations": [
+      {
+        "id": "heading-order",
+        "impact": "moderate",
+        "description": "Ensures the order of headings is semantically correct",
+        "help": "Heading levels should only increase by one",
+        "nodes": [
+          {
+            "html": "<h3>About Us</h3>",
+            "target": ["h3"]
+          }
+        ]
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "screenshotPath": "artifacts/screenshots/example_com_about.png",
+  "startedAt": "2023-12-11T14:30:05.000Z",
+  "finishedAt": "2023-12-11T14:30:07.120Z"
+}

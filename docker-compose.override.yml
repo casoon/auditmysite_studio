@@ -1,0 +1,34 @@
+# Development overrides for docker-compose.yml
+version: '3.8'
+
+services:
+  auditmysite-engine:
+    # Override build for development
+    build:
+      context: ./auditmysite_engine
+      dockerfile: Dockerfile
+      target: build  # Stop at build stage for development
+    
+    # Enable hot reload by mounting source code
+    volumes:
+      - ./auditmysite_engine:/app
+      - audit_artifacts_dev:/app/artifacts
+      
+    # Development environment variables
+    environment:
+      - LOG_LEVEL=debug
+      - DEV_MODE=true
+      - CHROME_ARGS=--no-sandbox,--disable-setuid-sandbox,--disable-dev-shm-usage,--disable-gpu
+      
+    # Use dart run instead of compiled binary for hot reload
+    command: ["dart", "run", "bin/serve.dart", "--port=3000", "--host=0.0.0.0", "--debug"]
+    
+    # Development port mapping (same but explicit)
+    ports:
+      - "3000:3000"
+      - "9229:9229"  # Debug port for Dart VM debugging
+
+volumes:
+  # Separate dev volume to avoid conflicts
+  audit_artifacts_dev:
+    driver: local

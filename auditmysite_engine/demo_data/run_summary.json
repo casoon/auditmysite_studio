@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "2.0.0",
+  "runId": "demo_audit_001",
+  "startedAt": "2025-01-11T21:44:16Z",
+  "finishedAt": "2025-01-11T21:44:30Z",
+  "duration": {
+    "totalMs": 14000,
+    "formatted": "14s"
+  },
+  
+  "pages": {
+    "total": 15,
+    "successful": 12,
+    "errors": 3,
+    "successRate": 80
+  },
+  
+  "violations": {
+    "total": 28,
+    "byImpact": {
+      "critical": 8,
+      "serious": 12,
+      "moderate": 6,
+      "minor": 2
+    },
+    "avgPerPage": "1.9"
+  },
+  
+  "performance": {
+    "totalPagesWithPerf": 12,
+    "averageScore": 67,
+    "scoreDistribution": {
+      "A (90-100)": 3,
+      "B (80-89)": 2,
+      "C (70-79)": 3,
+      "D (60-69)": 2,
+      "F (0-59)": 2
+    },
+    "issuesByType": {
+      "lcp-slow": 8,
+      "fcp-slow": 6,
+      "cls-high": 4,
+      "ttfb-slow": 7
+    }
+  },
+  
+  "seo": {
+    "totalPagesWithSeo": 12,
+    "averageScore": 58,
+    "scoreDistribution": {
+      "A (90-100)": 2,
+      "B (80-89)": 1,
+      "C (70-79)": 3,
+      "D (60-69)": 3,
+      "F (0-59)": 3
+    },
+    "issuesByCategory": {
+      "title": {
+        "title-short": 4,
+        "title-long": 2,
+        "missing": 1
+      },
+      "description": {
+        "description-missing": 5,
+        "description-short": 1,
+        "description-long": 1
+      },
+      "headings": {
+        "h1-missing": 3,
+        "h1-multiple": 1
+      },
+      "images": {
+        "image-alt-missing": 18,
+        "image-alt-empty": 8
+      }
+    },
+    "totalIssues": 44
+  },
+  
+  "legacyPerf": {
+    "ttfb": {
+      "count": 12,
+      "avg": 1245,
+      "median": 980,
+      "min": 420,
+      "max": 2400,
+      "unit": "ms"
+    },
+    "fcp": {
+      "count": 12,
+      "avg": 2180,
+      "median": 1850,
+      "min": 780,
+      "max": 4200,
+      "unit": "ms"
+    },
+    "lcp": {
+      "count": 12,
+      "avg": 3420,
+      "median": 2950,
+      "min": 1200,
+      "max": 6800,
+      "unit": "ms"
+    },
+    "domContentLoaded": {
+      "count": 12,
+      "avg": 2850,
+      "median": 2100,
+      "min": 980,
+      "max": 5200,
+      "unit": "ms"
+    }
+  },
+  
+  "engine": {
+    "taskDuration": {
+      "count": 12,
+      "avg": 1167,
+      "median": 1050,
+      "min": 850,
+      "max": 1680,
+      "unit": "ms"
+    },
+    "peakRss": {
+      "count": 12,
+      "avg": 245760000,
+      "median": 238592000,
+      "min": 198656000,
+      "max": 312320000,
+      "unit": "bytes"
+    }
+  },
+  
+  "urls": [
+    "https://example.com/",
+    "https://example.com/about",
+    "https://example.com/services",
+    "https://example.com/products/widget-a",
+    "https://example.com/products/widget-b",
+    "https://example.com/blog",
+    "https://example.com/blog/article-1",
+    "https://example.com/blog/article-2",
+    "https://example.com/contact",
+    "https://example.com/privacy",
+    "https://example.com/terms",
+    "https://example.com/sitemap"
+  ]
+}
