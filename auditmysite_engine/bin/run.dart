@@ -7,6 +7,12 @@ import 'package:auditmysite_engine/cdp/browser_pool.dart';
 import 'package:auditmysite_engine/core/audits/audit_http.dart';
 import 'package:auditmysite_engine/core/audits/audit_perf.dart';
 import 'package:auditmysite_engine/core/audits/audit_a11y_axe.dart';
+import 'package:auditmysite_engine/core/audits/audit_seo.dart';
+import 'package:auditmysite_engine/core/audits/audit_content_weight.dart';
+import 'package:auditmysite_engine/core/audits/audit_mobile.dart';
+import 'package:auditmysite_engine/core/audits/audit_wcag21.dart';
+import 'package:auditmysite_engine/core/audits/audit_aria.dart';
+import 'package:auditmysite_engine/core/performance_budgets.dart';
 import 'package:auditmysite_engine/writer/json_writer.dart';
 import 'package:auditmysite_engine/service/websocket_service.dart';
 import 'package:auditmysite_engine/core/events.dart';
@@ -17,6 +23,11 @@ Future<void> main(List<String> args) async {
     ..addOption('out', defaultsTo: './artifacts')
     ..addOption('concurrency', defaultsTo: '4')
     ..addFlag('perf', defaultsTo: true)
+    ..addFlag('seo', defaultsTo: true)
+    ..addFlag('content-weight', defaultsTo: true)
+    ..addFlag('mobile', defaultsTo: true)
+    ..addFlag('wcag21', defaultsTo: true)
+    ..addFlag('aria', defaultsTo: true)
     ..addFlag('screenshots', defaultsTo: false)
     ..addFlag('serve', help: 'Start WebSocket server for live progress', defaultsTo: false)
     ..addOption('port', help: 'WebSocket server port', defaultsTo: '8080')
@@ -24,7 +35,8 @@ Future<void> main(List<String> args) async {
     ..addOption('exclude', help: 'Exclude URLs matching regex pattern')
     ..addOption('max-pages', help: 'Maximum number of pages to audit', defaultsTo: '1000')
     ..addOption('delay', help: 'Delay between requests in milliseconds', defaultsTo: '0')
-    ..addOption('rate-limit', help: 'Maximum requests per second', defaultsTo: '0');
+    ..addOption('rate-limit', help: 'Maximum requests per second', defaultsTo: '0')
+    ..addOption('budget', help: 'Performance budget template (default, ecommerce, corporate, blog)', defaultsTo: 'default');
 
   final opts = parser.parse(args);
   final sitemapUrl = opts['sitemap'] as String?;
@@ -36,7 +48,13 @@ Future<void> main(List<String> args) async {
   final outDir = Directory(opts['out'] as String)..createSync(recursive: true);
   final concurrency = int.parse(opts['concurrency'] as String);
   final collectPerf = opts['perf'] as bool;
+  final collectSeo = opts['seo'] as bool;
+  final collectContentWeight = opts['content-weight'] as bool;
+  final collectMobile = opts['mobile'] as bool;
+  final collectWcag21 = opts['wcag21'] as bool;
+  final collectAria = opts['aria'] as bool;
   final screenshots = opts['screenshots'] as bool;
+  final budgetName = opts['budget'] as String;
 
   final allUrls = await loadSitemapUris(Uri.parse(sitemapUrl));
   final filteredUrls = _filterUrls(allUrls, opts);
@@ -66,17 +84,27 @@ Future<void> main(List<String> args) async {
   final delay = int.parse(opts['delay'] as String);
   final rateLimit = double.parse(opts['rate-limit'] as String);
   
+  // Get performance budget
+  final budget = PerformanceBudgets.getBudget(budgetName);
+  print('Using performance budget: ${budget.name} - ${budget.description}');
+  
   final queue = AuditQueue(
     concurrency: concurrency,
     browserPool: browserPool,
     audits: [
       HttpAudit(),
       if (collectPerf) PerfAudit(),
+      if (collectSeo) SEOAudit(),
+      if (collectContentWeight) ContentWeightAudit(),
+      if (collectMobile) MobileAudit(),
+      if (collectWcag21) WCAG21Audit(),
+      if (collectAria) ARIAAudit(),
       A11yAxeAudit(screenshots: screenshots, axeSourceFile: 'third_party/axe/axe.min.js'),
     ],
     writer: writer,
     delayBetweenRequests: delay,
     maxRequestsPerSecond: rateLimit > 0 ? rateLimit : null,
+    performanceBudget: budget,
   );
 
   // Register event handler to controller

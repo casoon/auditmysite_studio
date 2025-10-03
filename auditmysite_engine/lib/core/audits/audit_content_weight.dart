@@ -10,8 +10,8 @@ class ContentWeightAudit extends Audit {
     final page = ctx.page;
     
     // Performance API für detaillierte Ressourcen-Informationen nutzen
-    final resourceData = await page.evaluate('''
-      () => {
+    final resourceData = await page.evaluate(r'''
+() => {
         const resources = performance.getEntriesByType('resource');
         const navigation = performance.getEntriesByType('navigation')[0];
         
@@ -77,12 +77,12 @@ class ContentWeightAudit extends Audit {
         });
         
         function getResourceType(url, initiatorType) {
-          if (url.match(/\.(css)(\$|\?)/)) return 'css';
-          if (url.match(/\.(js)(\$|\?)/)) return 'javascript';
-          if (url.match(/\.(jpg|jpeg|png|gif|svg|webp|avif)(\$|\?)/i)) return 'image';
-          if (url.match(/\.(woff|woff2|ttf|eot|otf)(\$|\?)/i)) return 'font';
-          if (url.match(/\.(mp4|webm|ogg|avi)(\$|\?)/i)) return 'video';
-          if (url.match(/\.(mp3|wav|ogg)(\$|\?)/i)) return 'audio';
+          if (url.match(/\.(css)($|\?)/)) return 'css';
+          if (url.match(/\.(js)($|\?)/)) return 'javascript';
+          if (url.match(/\.(jpg|jpeg|png|gif|svg|webp|avif)($|\?)/i)) return 'image';
+          if (url.match(/\.(woff|woff2|ttf|eot|otf)($|\?)/i)) return 'font';
+          if (url.match(/\.(mp4|webm|ogg|avi)($|\?)/i)) return 'video';
+          if (url.match(/\.(mp3|wav|ogg)($|\?)/i)) return 'audio';
           if (initiatorType === 'xmlhttprequest' || initiatorType === 'fetch') return 'xhr';
           return 'other';
         }
@@ -108,7 +108,7 @@ class ContentWeightAudit extends Audit {
             firstByte: navigation ? Math.round(navigation.responseStart - navigation.navigationStart) : null
           }
         };
-      }
+}
     ''');
     
     // Content Weight Score berechnen

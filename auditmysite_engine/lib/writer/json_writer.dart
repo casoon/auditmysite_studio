@@ -6,24 +6,44 @@ class JsonWriter {
   final String runId;
   final List<Map<String, dynamic>> _processedPages = [];
   final DateTime _runStartTime = DateTime.now();
-
-  JsonWriter({required this.baseDir, required this.runId});
+  
+  JsonWriter({required Directory baseDir, String? runId}) 
+      : this.baseDir = baseDir,
+        this.runId = runId ?? '';
 
   Future<void> write(Map<String, dynamic> pageJson) async {
-    final runDir = Directory('${baseDir.path}/$runId/pages')..createSync(recursive: true);
+    // Create main directory if needed
+    baseDir.createSync(recursive: true);
+    
+    // Use date-based filename
+    final dateStr = DateTime.now().toIso8601String().split('T')[0]; // YYYY-MM-DD
     final url = pageJson['url'] as String;
-    final fileName = url.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_');
-    final file = File('${runDir.path}/$fileName.json');
+    final urlSlug = url.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '_');
+    final fileName = 'audit_${dateStr}_$urlSlug';
+    final file = File('${baseDir.path}/$fileName.json');
+    
+    // Overwrite if exists (same day = overwrite)
     await file.writeAsString(const JsonEncoder.withIndent('  ').convert(pageJson));
     
     // Store page data for summary aggregation
     _processedPages.add(pageJson);
   }
   
-  Future<void> writeSummary() async {
-    final runDir = Directory('${baseDir.path}/$runId')..createSync(recursive: true);
-    final summaryFile = File('${runDir.path}/run_summary.json');
+  Future<void> writeSummary([Map<String, dynamic>? additionalData]) async {
+    // Create main directory if needed
+    baseDir.createSync(recursive: true);
+    
+    // Use date-based summary filename
+    final dateStr = DateTime.now().toIso8601String().split('T')[0]; // YYYY-MM-DD
+    final summaryFile = File('${baseDir.path}/summary_$dateStr.json');
     final summary = _generateSummary();
+    
+    // Merge additional data if provided
+    if (additionalData != null) {
+      summary.addAll(additionalData);
+    }
+    
+    // Overwrite if exists (same day = overwrite)
     await summaryFile.writeAsString(const JsonEncoder.withIndent('  ').convert(summary));
   }
   

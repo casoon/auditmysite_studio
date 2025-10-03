@@ -136,6 +136,69 @@ class SEOAudit implements Audit {
     }
   });
 
+  // Analyze links
+  const links = document.querySelectorAll('a[href]');
+  result.links = {
+    internal: 0,
+    external: 0,
+    nofollow: 0,
+    total: 0
+  };
+  
+  const currentHost = window.location.hostname;
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    const rel = link.getAttribute('rel') || '';
+    
+    result.links.total++;
+    
+    if (rel.includes('nofollow')) {
+      result.links.nofollow++;
+    }
+    
+    try {
+      if (href.startsWith('http://') || href.startsWith('https://')) {
+        const url = new URL(href);
+        if (url.hostname === currentHost) {
+          result.links.internal++;
+        } else {
+          result.links.external++;
+        }
+      } else if (!href.startsWith('mailto:') && !href.startsWith('tel:') && !href.startsWith('javascript:')) {
+        result.links.internal++;
+      }
+    } catch (e) {
+      // Invalid URL, count as internal
+      result.links.internal++;
+    }
+  });
+
+  // Calculate readability metrics
+  const bodyText = document.body.innerText || document.body.textContent || '';
+  const sentences = bodyText.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  const words = bodyText.split(/\s+/).filter(w => w.length > 0);
+  const syllableCount = words.reduce((count, word) => {
+    // Simple syllable counting (not perfect but good enough)
+    return count + word.toLowerCase().replace(/[^aeiou]/g, '').length || 1;
+  }, 0);
+  
+  // Flesch Reading Ease Score
+  const avgWordsPerSentence = sentences.length > 0 ? words.length / sentences.length : 0;
+  const avgSyllablesPerWord = words.length > 0 ? syllableCount / words.length : 0;
+  const fleschScore = 206.835 - 1.015 * avgWordsPerSentence - 84.6 * avgSyllablesPerWord;
+  
+  result.readability = {
+    wordCount: words.length,
+    sentenceCount: sentences.length,
+    avgWordsPerSentence: Math.round(avgWordsPerSentence * 10) / 10,
+    fleschReadingEase: Math.max(0, Math.min(100, Math.round(fleschScore)))
+  };
+  
+  // Calculate text-to-code ratio
+  const htmlLength = document.documentElement.outerHTML.length;
+  const textLength = bodyText.length;
+  result.textToCodeRatio = htmlLength > 0 ? Math.round((textLength / htmlLength) * 100) : 0;
+
   return result;
 }
 ''');

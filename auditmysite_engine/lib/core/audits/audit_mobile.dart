@@ -10,8 +10,8 @@ class MobileAudit extends Audit {
     final page = ctx.page;
     
     // Mobile-spezifische Checks durchführen
-    final mobileData = await page.evaluate('''
-      () => {
+    final mobileData = await page.evaluate(r'''
+() => {
         const issues = [];
         let score = 100;
         
@@ -302,7 +302,7 @@ class MobileAudit extends Audit {
           grade: grade,
           timestamp: new Date().toISOString()
         };
-      }
+}
     ''');
     
     ctx.mobileResult = mobileData;

@@ -198,59 +198,58 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 > This project is part of the broader AuditMySite ecosystem, providing desktop-native website auditing capabilities.
 
-# auditmysite_studio
+## 📋 Detailed Technical Guide
 
-Ein umfassendes Website-Audit-System mit drei Hauptkomponenten:
+A comprehensive website auditing system with three main components:
 
-- **auditmysite_engine** (Dart): Lädt Sitemaps, führt Audits per CDP + axe-core aus
-- **auditmysite_cli** (Dart): Erstellt HTML-Reports aus JSON-Artefakten  
-- **auditmysite_studio** (Flutter Desktop): GUI für Endanwender
+- **auditmysite_engine** (Dart): Loads sitemaps, performs audits via CDP + axe-core
+- **auditmysite_cli** (Dart): Creates HTML reports from JSON artifacts  
+- **auditmysite_studio** (Flutter Desktop): GUI for end users
 
-## Architektur
+### Technical Architecture
 
 ```
 auditmysite_studio/
-├─ shared/                    # gemeinsame Modelle & Utils
-├─ auditmysite_engine/        # Dart-Engine (Sitemap → Queue → CDP + axe)
-├─ auditmysite_cli/           # CLI: JSON → HTML-Report
-└─ auditmysite_studio/        # Flutter Desktop GUI
+├─ shared/                    # Shared models & utilities
+├─ auditmysite_engine/        # Dart engine (Sitemap → Queue → CDP + axe)
+├─ auditmysite_cli/           # CLI: JSON → HTML reports
+└─ auditmysite_studio/        # Flutter desktop GUI
 ```
 
-## Quick Start
+### Development Setup (Detailed)
 
-### 1. Setup
-
-Stelle sicher, dass Du Dart ≥3.3.0 und Flutter ≥3.19.0 installiert hast.
+#### Prerequisites
+Ensure you have Dart ≥3.3.0 and Flutter ≥3.19.0 installed.
 
 ```bash
-# Root-Verzeichnis
+# Navigate to root directory
 cd auditmysite_studio
 
-# Shared-Modelle generieren
+# Generate shared models
 cd shared
 dart pub get
 dart run build_runner build --delete-conflicting-outputs
 cd ..
 
-# Dependencies für alle Packages installieren
+# Install dependencies for all packages
 cd auditmysite_engine && dart pub get && cd ..
 cd auditmysite_cli && dart pub get && cd ..
 cd auditmysite_studio && flutter pub get && cd ..
 ```
 
-### 2. axe-core Integration
+#### axe-core Integration
 
-Die echte `axe.min.js` Datei muss von [axe-core](https://github.com/dequelabs/axe-core) heruntergeladen werden:
+The actual `axe.min.js` file must be downloaded from [axe-core](https://github.com/dequelabs/axe-core):
 
 ```bash
-# Download der aktuellen axe-core Version
+# Download current axe-core version
 wget https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.8.4/axe.min.js \
   -O auditmysite_engine/third_party/axe/axe.min.js
 ```
 
-### 3. Engine ausführen
+#### Running the Engine
 
-**Standard Modus:**
+**Standard Mode:**
 ```bash
 cd auditmysite_engine
 dart run bin/run.dart \
@@ -261,7 +260,7 @@ dart run bin/run.dart \
   --screenshots
 ```
 
-**Mit Live WebSocket (Sprint 2):**
+**With Live WebSocket:**
 ```bash
 cd auditmysite_engine
 dart run bin/run.dart \
@@ -272,15 +271,15 @@ dart run bin/run.dart \
   --perf
 ```
 
-**Nur WebSocket Server:**
+**WebSocket Server Only:**
 ```bash
 cd auditmysite_engine
 dart run bin/serve.dart --port=8080
 ```
 
-Dies erstellt JSON-Dateien in `./artifacts/<runId>/pages/`.
+This creates JSON files in `./artifacts/<runId>/pages/`.
 
-### 4. HTML-Report generieren
+#### Generate HTML Reports
 
 ```bash
 cd auditmysite_cli
@@ -290,67 +289,65 @@ dart run bin/build.dart \
   --title="Website Audit"
 ```
 
-Öffne dann `./reports/index.html` im Browser.
+Then open `./reports/index.html` in your browser.
 
-### 5. GUI starten
+#### Start GUI Application
 
 ```bash
 cd auditmysite_studio
-flutter run -d macos  # oder windows/linux
+flutter run -d macos  # or windows/linux
 ```
 
-## Features
+## 🚀 Advanced Features
 
-### Engine Features
-- ✅ Sitemap-Parsing (inkl. sitemap index)
-- ✅ Concurrent Processing mit konfigurierbaren Workern
-- ✅ HTTP-Status und Header-Erfassung
-- ✅ Performance-Metriken (TTFB, FCP, LCP, DCL)
-- ✅ Accessibility-Audits mit axe-core
-- ✅ Console Error-Sammlung
-- ✅ Optional: Full-Page Screenshots
-- ✅ Event-System für Live-Tracking
+### Engine Capabilities
+- ✅ Sitemap parsing (including sitemap index)
+- ✅ Concurrent processing with configurable workers
+- ✅ HTTP status and header collection
+- ✅ Performance metrics (TTFB, FCP, LCP, DCL)
+- ✅ Accessibility audits with axe-core
+- ✅ Console error collection
+- ✅ Optional: Full-page screenshots
+- ✅ Event system for live tracking
 
-### CLI Features  
-- ✅ JSON zu HTML-Konvertierung
-- ✅ Übersichts-Report mit Tabelle aller Seiten
-- ✅ Detail-Seiten pro URL
-- ✅ Performance-Metriken Visualization
-- ✅ Accessibility Violations mit Impact-Level
-- ✅ Console Errors Darstellung
+### CLI Capabilities  
+- ✅ JSON to HTML conversion
+- ✅ Overview report with table of all pages
+- ✅ Detail pages per URL
+- ✅ Performance metrics visualization
+- ✅ Accessibility violations with impact levels
+- ✅ Console error display
 
-### Studio Features (Sprint 2)
-- ✅ Run-Setup Interface
-- ✅ Manual Command Generation  
-- ✅ Live Progress Tracking via WebSocket
-- ✅ Results Loading & Management
-- ✅ Interactive Data Table with Statistics
-- 😧 Integrated Report Generation (Sprint 3)
+### Studio Application Features
+- ✅ Run setup interface
+- ✅ Manual command generation  
+- ✅ Live progress tracking via WebSocket
+- ✅ Results loading & management
+- ✅ Interactive data table with statistics
+- 😧 Integrated report generation (upcoming)
 
-## Nächste Schritte
+## 🗺️ Development Roadmap
 
-### Sprint 2 ✅ COMPLETE
-- ✅ WebSocket-Integration für Live-Events  
-- ✅ Retry/Backoff-Mechanismus in der Engine
-- ✅ Results Loading in der Studio-App
-- ✅ Enhanced CLI Template-System mit Filter/Suche
-- ✅ Performance-Metriken Sammlung
+### ✅ Completed Features
+- ✅ WebSocket integration for live events  
+- ✅ Retry/backoff mechanism in engine
+- ✅ Results loading in studio app
+- ✅ Enhanced CLI template system with filtering/search
+- ✅ Performance metrics collection
 
-### Sprint 3  
-- [ ] Engine Performance-Metriken (CPU/RAM)
-- [ ] CLI Template-System auslagern
-- [ ] Filter/Suche im HTML-Report
-- [ ] Studio Export-Integration
+### 📅 Upcoming Features  
+- [ ] Engine performance metrics (CPU/RAM)
+- [ ] Modular CLI template system
+- [ ] Filter/search in HTML reports
+- [ ] Studio export integration
+- [ ] robots.txt compliance
+- [ ] Authentication/cookies support
+- [ ] Mobile/device profile emulation
+- [ ] Project management & persistence
 
-### Sprint 4
-- [ ] robots.txt Respektierung
-- [ ] Auth/Cookies Support
-- [ ] Mobile/Device-Profile Emulation
-- [ ] Projektverwaltung & Persistenz
+## 📊 Data Schema
 
-## JSON Schema
-
-Jede Seite wird als JSON-Datei nach folgendem Schema gespeichert:
+Each page is saved as a JSON file following this schema:
 
 ```json
 {
@@ -384,6 +381,6 @@ Jede Seite wird als JSON-Datei nach folgendem Schema gespeichert:
 }
 ```
 
-## Lizenz
+## 📜 License
 
-MIT License - siehe todo.md für weitere Details zur Implementierung.
+MIT License - see LICENSE file for implementation details.

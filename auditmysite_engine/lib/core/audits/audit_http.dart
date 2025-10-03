@@ -87,7 +87,7 @@ class HttpAudit implements Audit {
       if (currentUrl != null && currentUrl.startsWith('https://')) {
         try {
           // Evaluiere JavaScript im Browser für SSL-Info
-          final sslInfo = await page.evaluate('''
+          final sslInfo = await page.evaluate(r'''
             () => {
               try {
                 const connection = navigator.connection;

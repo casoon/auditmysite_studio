@@ -5,6 +5,9 @@ import 'package:auditmysite_engine/core/events.dart';
 import 'package:auditmysite_engine/cdp/browser_pool.dart';
 import 'package:auditmysite_engine/core/audits/audit_base.dart';
 import 'package:auditmysite_engine/writer/json_writer.dart';
+import 'package:auditmysite_engine/core/performance_budgets.dart';
+import 'package:auditmysite_engine/core/redirect_handler.dart';
+import 'package:puppeteer/puppeteer.dart';
 
 class AuditQueue {
   final int concurrency;
@@ -15,6 +18,9 @@ class AuditQueue {
   final int baseDelayMs;
   final int delayBetweenRequests;
   final double? maxRequestsPerSecond;
+  final PerformanceBudget? performanceBudget;
+  final bool skipRedirects;
+  final RedirectHandler redirectHandler;
   
   // Rate limiting state
   DateTime? _lastRequestTime;
@@ -29,7 +35,10 @@ class AuditQueue {
     this.baseDelayMs = 1000,
     this.delayBetweenRequests = 0,
     this.maxRequestsPerSecond,
-  });
+    this.performanceBudget,
+    this.skipRedirects = true,
+    RedirectHandler? redirectHandler,
+  }) : redirectHandler = redirectHandler ?? RedirectHandler(skipRedirects: skipRedirects);
 
   Future<void> process(List<Uri> urls, [StreamController<AuditEvent>? externalController]) async {
     final controller = externalController ?? StreamController<AuditEvent>.broadcast();
@@ -37,21 +46,55 @@ class AuditQueue {
     // Only add default logging if no external controller
     if (externalController == null) {
       controller.stream.listen((e) {
-        print('[${e.runtimeType}] ${e.url}');
+        if (e is PageRedirected) {
+          print('[REDIRECT] ${e.url} -> ${e.finalUrl}');
+        } else {
+          print('[${e.runtimeType}] ${e.url}');
+        }
       });
     }
 
     final pool = <Future>[];
-    final it = urls.iterator;
-    final runId = DateTime.now().toIso8601String().replaceAll(':', '-').replaceAll('.', '_');
+    final processedUrls = <Uri>[];
+    final skippedRedirects = <Uri>[];
+    int urlIndex = 0;
+    final runId = writer.runId;  // Use runId from writer for consistency
 
     Future<void> spawn() async {
       while (true) {
-        if (!it.moveNext()) break;
-        final url = it.current;
+        // Thread-safe URL fetching
+        Uri? url;
+        if (urlIndex < urls.length) {
+          url = urls[urlIndex++];
+        } else {
+          break;
+        }
+        if (url == null) break;
+        
+        // Check if URL should be skipped due to redirect
+        if (redirectHandler.shouldSkip(url)) {
+          skippedRedirects.add(url);
+          controller.add(PageSkipped(url, 'Previously detected as redirect'));
+          continue;
+        }
+        
         controller.add(PageQueued(url));
         
-        await _processPageWithRetry(url, controller, runId);
+        // First check if this URL will redirect
+        final page = await browserPool.newPage();
+        final redirectInfo = await redirectHandler.detectRedirect(page, url, controller);
+        
+        if (redirectInfo != null && skipRedirects) {
+          // Skip this URL, it's a redirect
+          skippedRedirects.add(url);
+          controller.add(PageSkipped(url, 'Redirect detected to ${redirectInfo.finalUrl}'));
+          await page.close();
+          continue;
+        }
+        
+        // Process the page normally
+        await _processPageWithRetry(url, controller, runId, page);
+        processedUrls.add(url);
       }
     }
 
@@ -60,10 +103,30 @@ class AuditQueue {
     }
     await Future.wait(pool);
     
-    // Write run summary
+    // Write run summary with redirect statistics
     try {
-      await writer.writeSummary();
+      final summary = {
+        'runId': runId,
+        'totalUrls': urls.length,
+        'processedUrls': processedUrls.length,
+        'skippedRedirects': skippedRedirects.length,
+        'redirectStatistics': redirectHandler.getSummary(),
+      };
+      await writer.writeSummary(summary);
       print('✅ Run summary written to artifacts/$runId/run_summary.json');
+      
+      // Print statistics
+      print('\n📊 Audit Statistics:');
+      print('   - Total URLs: ${urls.length}');
+      print('   - Processed: ${processedUrls.length}');
+      print('   - Skipped (redirects): ${skippedRedirects.length}');
+      
+      if (redirectHandler.stats.totalRedirects > 0) {
+        print('\n🔄 Redirect Details:');
+        print('   - HTTP redirects: ${redirectHandler.stats.httpRedirects}');
+        print('   - JavaScript redirects: ${redirectHandler.stats.jsRedirects}');
+        print('   - Meta redirects: ${redirectHandler.stats.metaRedirects}');
+      }
     } catch (e) {
       print('⚠️  Failed to write run summary: $e');
     }
@@ -74,7 +137,7 @@ class AuditQueue {
     }
   }
 
-  Future<void> _processPageWithRetry(Uri url, StreamController<AuditEvent> controller, String runId) async {
+  Future<void> _processPageWithRetry(Uri url, StreamController<AuditEvent> controller, String runId, [Page? existingPage]) async {
     int attempt = 0;
     
     while (attempt <= maxRetries) {
@@ -84,7 +147,7 @@ class AuditQueue {
         
         final pageStartTime = DateTime.now();
         
-        final page = await browserPool.newPage();
+        final page = existingPage ?? await browserPool.newPage();
         controller.add(PageStarted(url));
         
         final ctx = AuditContext(
@@ -93,6 +156,11 @@ class AuditQueue {
           events: controller, 
           runId: runId,
         );
+        
+        // Set performance budget if provided
+        if (performanceBudget != null) {
+          ctx.performanceBudget = performanceBudget!.name;
+        }
         
         // Run all audits
         for (final audit in audits) {

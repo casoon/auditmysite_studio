@@ -14,6 +14,11 @@ class PageError extends AuditEvent {
   PageError(super.url, this.message);
 }
 
+class PageSkipped extends AuditEvent {
+  final String reason;
+  PageSkipped(super.url, this.reason);
+}
+
 class PageRetry extends AuditEvent {
   final int attempt;
   final int delayMs;
@@ -56,7 +61,15 @@ class AuditContext {
   
   // Neue Audit-Results
   Map<String, dynamic>? contentWeightResult; // Content Weight Audit Result
+  Map<String, dynamic>? contentQualityResult; // Content Quality Audit Result
   Map<String, dynamic>? mobileResult; // Mobile Friendliness Audit Result
+  dynamic wcag21Analysis; // WCAG 2.1 Analysis Result
+  dynamic ariaAnalysis; // ARIA Analysis Result
+  dynamic formAnalysis; // Form Accessibility Analysis
+  dynamic keyboardAnalysis; // Keyboard Navigation Analysis
+  dynamic structuredDataAnalysis; // Structured Data / Schema.org Analysis
+  dynamic securityHeadersAnalysis; // Security Headers Analysis
+  String? performanceBudget; // Applied performance budget name
 
   final DateTime startedAt;
   
@@ -98,8 +111,18 @@ class AuditContext {
       'performance': performanceResult,
       'seo': seoResult,
       'contentWeight': contentWeightResult,
+      'contentQuality': contentQualityResult,
       'mobile': mobileResult,
-      'a11y': axeJson != null ? {'violations': axeJson!['violations'] ?? []} : null,
+      'a11y': axeJson != null ? {
+        'violations': axeJson!['violations'] ?? [],
+        'wcag21Analysis': wcag21Analysis?.toJson(),
+        'ariaAnalysis': ariaAnalysis?.toJson(),
+        'formAnalysis': formAnalysis?.toJson(),
+        'keyboardAnalysis': keyboardAnalysis?.toJson(),
+      } : null,
+      'structuredData': structuredDataAnalysis?.toJson(),
+      'securityHeaders': securityHeadersAnalysis?.toJson(),
+      'performanceBudget': performanceBudget,
       'consoleErrors': consoleErrors,
       'screenshotPath': screenshotPath,
       'startedAt': startedAt.toIso8601String(),
