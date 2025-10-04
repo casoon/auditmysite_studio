@@ -99,19 +99,22 @@ class AuditProgressNotifier extends StateNotifier<AuditProgress> {
   
   AuditProgressNotifier(this.ref) : super(const AuditProgress());
   
-  /// Start monitoring audit progress
-  void startMonitoring(int totalUrls) {
+  /// Start monitoring audit progress with direct session event stream
+  void startMonitoring(int totalUrls, Stream<EngineEvent> eventStream) {
     state = AuditProgress(
       isRunning: true,
       totalUrls: totalUrls,
       processedPages: [],
     );
     
-    // Listen to engine events
+    // Listen to engine events directly from the session
     _eventSubscription?.cancel();
-    _eventSubscription = ref.read(auditEventsProvider.stream).listen((event) {
-      _handleEngineEvent(event);
-    });
+    _eventSubscription = eventStream.listen(
+      _handleEngineEvent,
+      onError: (error) {
+        print('[Progress] Error in event stream: $error');
+      },
+    );
   }
   
   /// Stop monitoring
@@ -122,8 +125,10 @@ class AuditProgressNotifier extends StateNotifier<AuditProgress> {
   
   /// Handle engine events
   void _handleEngineEvent(EngineEvent event) {
+    print('[Progress] Event received: ${event.type} - ${event.url}');
     switch (event.type) {
       case EngineEventType.pageStarted:
+        print('[Progress] Page started: ${event.url}');
         state = state.copyWith(currentUrl: event.url);
         break;
         

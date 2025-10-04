@@ -54,10 +54,10 @@ class JsonWriter {
     // HTTP Status Code Kategorisierung
     final totalPages = _processedPages.length;
     final httpStats = _calculateHttpStatusStats();
-    final successfulPages = httpStats['successful'] as int;
-    final redirectPages = httpStats['redirects'] as int;
-    final errorPages = httpStats['errors'] as int;
-    final crashedPages = httpStats['crashed'] as int;
+    final successfulPages = (httpStats['successful'] as num).toInt();
+    final redirectPages = (httpStats['redirects'] as num).toInt();
+    final errorPages = (httpStats['errors'] as num).toInt();
+    final crashedPages = (httpStats['crashed'] as num).toInt();
     
     // Accessibility statistics
     final allViolations = _processedPages
@@ -219,7 +219,8 @@ class JsonWriter {
     final statusBreakdown = <String, int>{};
     
     for (final page in _processedPages) {
-      final status = page['http']?['statusCode'] as int?;
+      final statusValue = page['http']?['statusCode'];
+      final status = statusValue is num ? statusValue.toInt() : null;
       
       if (status == null) {
         // Kein HTTP-Status = Browser-Crash oder Netzwerk-Fehler
@@ -274,7 +275,8 @@ class JsonWriter {
       final perfResult = page['performance'] as Map<String, dynamic>?;
       if (perfResult != null) {
         // Collect scores
-        final score = perfResult['score'] as int?;
+        final scoreValue = perfResult['score'];
+        final score = scoreValue is num ? scoreValue.toInt() : null;
         if (score != null) scores.add(score);
         
         // Collect grades
@@ -322,7 +324,8 @@ class JsonWriter {
       final seoResult = page['seo'] as Map<String, dynamic>?;
       if (seoResult != null) {
         // Collect scores
-        final score = seoResult['score'] as int?;
+        final scoreValue = seoResult['score'];
+        final score = scoreValue is num ? scoreValue.toInt() : null;
         if (score != null) scores.add(score);
         
         // Collect grades

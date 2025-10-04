@@ -74,6 +74,7 @@ artifacts/
 reports/
 test-reports/
 screenshots/
+.local-chrome/
 
 # Binary distributions (keep out of version control)
 dist/

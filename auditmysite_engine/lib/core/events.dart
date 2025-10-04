@@ -70,6 +70,7 @@ class AuditContext {
   dynamic structuredDataAnalysis; // Structured Data / Schema.org Analysis
   dynamic securityHeadersAnalysis; // Security Headers Analysis
   String? performanceBudget; // Applied performance budget name
+  Map<String, String>? auditErrors; // Errors from individual audits
 
   final DateTime startedAt;
   
@@ -125,6 +126,7 @@ class AuditContext {
       'performanceBudget': performanceBudget,
       'consoleErrors': consoleErrors,
       'screenshotPath': screenshotPath,
+      'auditErrors': auditErrors,
       'startedAt': startedAt.toIso8601String(),
       'finishedAt': DateTime.now().toIso8601String(),
     };

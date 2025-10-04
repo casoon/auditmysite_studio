@@ -161,9 +161,16 @@ class ARIAAudit extends Audit {
   
   // Check for landmarks
   expectedLandmarks.forEach(landmark => {
-    const elements = document.querySelectorAll(
-      `[role="${landmark}"], ${landmark === 'main' ? 'main' : landmark === 'navigation' ? 'nav' : landmark === 'banner' ? 'header' : landmark === 'contentinfo' ? 'footer' : ''}`
-    );
+    // Build selector dynamically
+    let selector = `[role="${landmark}"]`;
+    
+    // Add native HTML elements for certain landmarks
+    if (landmark === 'main') selector += ', main';
+    if (landmark === 'navigation') selector += ', nav';
+    if (landmark === 'banner') selector += ', header[role="banner"], header:not([role])';
+    if (landmark === 'contentinfo') selector += ', footer[role="contentinfo"], footer:not([role])';
+    
+    const elements = document.querySelectorAll(selector);
     
     if (elements.length > 0) {
       analysis.landmarks.present.push(landmark);

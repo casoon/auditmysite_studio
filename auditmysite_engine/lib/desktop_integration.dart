@@ -5,11 +5,10 @@ import 'package:auditmysite_engine/core/queue.dart';
 import 'package:auditmysite_engine/core/events.dart';
 import 'package:auditmysite_engine/cdp/browser_pool.dart';
 import 'package:auditmysite_engine/writer/json_writer.dart';
-import 'package:auditmysite_engine/core/simple_http_audit.dart';
 import 'package:auditmysite_engine/core/performance_budgets.dart';
 import 'package:auditmysite_engine/core/redirect_handler.dart';
-import 'package:auditmysite_engine/core/pdf_report_generator_enhanced.dart';
-import 'package:auditmysite_engine/core/audits/audit_base.dart';
+import 'package:auditmysite_engine/core/pdf/pdf_report_generator.dart';
+import 'package:auditmysite_engine/core/audits/audit_base.dart' show Audit, SafeAudit;
 import 'package:auditmysite_engine/core/audits/audit_http.dart';
 import 'package:auditmysite_engine/core/audits/audit_perf.dart';
 import 'package:auditmysite_engine/core/audits/audit_seo_advanced.dart';
@@ -41,22 +40,24 @@ class DesktopIntegration {
     _eventController = StreamController<EngineEvent>.broadcast();
     final auditEventController = StreamController<AuditEvent>.broadcast();
     
-    // Try to setup browser pool, use simple HTTP audit if it fails
+    // Launch browser pool (Puppeteer handles Chromium automatically)
+    print('[DEBUG] Launching browser pool...');
     try {
-      _browserPool = await BrowserPool.launch();
-    } catch (e) {
-      print('Warning: Browser pool failed to launch: $e');
-      print('Using simple HTTP audit mode instead.');
-      // Continue without browser pool - will use SimpleHttpAudit
+      _browserPool = await BrowserPool.launch(headless: true);
+      print('[DEBUG] ✅ Browser pool launched successfully');
+    } catch (e, stack) {
+      print('[ERROR] ❌ Failed to launch browser pool: $e');
+      print('[ERROR] Stack trace: $stack');
+      rethrow;
     }
     
     // Configure audits based on config
     final audits = _configureAudits(config);
     
-    // Setup writer (use sessionId for regular audits, empty for simple HTTP)
+    // Setup writer
     final writer = JsonWriter(
       baseDir: outputDir,
-      runId: _browserPool == null ? null : sessionId,
+      runId: sessionId,
     );
     
     // Configure redirect handler
@@ -67,23 +68,6 @@ class DesktopIntegration {
     
     // Get performance budget
     final budget = PerformanceBudgets.getBudget(config.performanceBudget);
-    
-    // If browser pool failed, use simple HTTP audit mode
-    if (_browserPool == null) {
-      // Use simple HTTP audit
-      final processFuture = _runSimpleHttpAudit(
-        config.urls,
-        writer,
-        auditEventController,
-      );
-      
-      return AuditSession(
-        sessionId: sessionId,
-        eventStream: _eventController!.stream,
-        outputPath: outputDir.path,
-        processFuture: processFuture,
-      );
-    }
     
     // Create audit queue with browser pool
     _currentQueue = AuditQueue(
@@ -104,8 +88,13 @@ class DesktopIntegration {
       _eventController?.add(_convertAuditEvent(event));
     });
     
-    // Start processing
-    final processFuture = _currentQueue!.process(config.urls, auditEventController);
+    // Start processing and generate PDF after completion
+    final processFuture = _processAndGeneratePDF(
+      config,
+      outputDir,
+      sessionId,
+      auditEventController,
+    );
     
     return AuditSession(
       sessionId: sessionId,
@@ -113,6 +102,36 @@ class DesktopIntegration {
       outputPath: outputDir.path,
       processFuture: processFuture,
     );
+  }
+  
+  /// Process audit queue and generate PDF report
+  Future<void> _processAndGeneratePDF(
+    AuditConfiguration config,
+    Directory outputDir,
+    String sessionId,
+    StreamController<AuditEvent> auditEventController,
+  ) async {
+    try {
+      // Run the audit queue
+      print('[DEBUG] Starting audit processing...');
+      await _currentQueue!.process(config.urls, auditEventController);
+      print('[DEBUG] ✅ Audit processing completed');
+      
+      // Generate PDF report
+      print('[DEBUG] Generating PDF report...');
+      await PdfReportGenerator.generateFromDirectory(
+        outputDir: outputDir.path,
+        runId: sessionId,
+      );
+      print('[DEBUG] ✅ PDF report generated successfully');
+    } catch (e, stack) {
+      print('[ERROR] ❌ Error during audit or PDF generation: $e');
+      print('[ERROR] Stack trace: $stack');
+      rethrow;
+    } finally {
+      // Cleanup
+      await auditEventController.close();
+    }
   }
   
   /// Cancel the current audit
@@ -135,59 +154,61 @@ class DesktopIntegration {
   }
   
   List<Audit> _configureAudits(AuditConfiguration config) {
-    final audits = <Audit>[];
+    final rawAudits = <Audit>[];
     
     // Always include HTTP audit
-    audits.add(HttpAudit());
+    rawAudits.add(HttpAudit());
     
     // Add configured audits
     if (config.enablePerformance) {
       if (config.useAdvancedAudits) {
-        audits.add(AdvancedPerformanceAudit(
+        rawAudits.add(AdvancedPerformanceAudit(
           budget: PerformanceBudgets.getBudget(config.performanceBudget),
         ));
       } else {
-        audits.add(PerfAudit());
+        rawAudits.add(PerfAudit());
       }
     }
     
     if (config.enableSEO) {
       if (config.useAdvancedAudits) {
-        audits.add(AdvancedSEOAudit());
+        rawAudits.add(AdvancedSEOAudit());
       } else {
         // Use basic SEO audit if available
-        audits.add(AdvancedSEOAudit()); // For now, always use advanced
+        rawAudits.add(AdvancedSEOAudit()); // For now, always use advanced
       }
     }
     
     if (config.enableContentWeight) {
-      audits.add(ContentWeightAudit());
+      rawAudits.add(ContentWeightAudit());
     }
     
     if (config.enableContentQuality) {
-      audits.add(ContentQualityAudit());
+      rawAudits.add(ContentQualityAudit());
     }
     
     if (config.enableMobile) {
-      audits.add(MobileAudit());
+      rawAudits.add(MobileAudit());
     }
     
     if (config.enableWCAG21) {
-      audits.add(WCAG21Audit());
+      rawAudits.add(WCAG21Audit());
     }
     
     if (config.enableARIA) {
-      audits.add(ARIAAudit());
+      rawAudits.add(ARIAAudit());
     }
     
-    if (config.enableAccessibility) {
-      audits.add(A11yAxeAudit(
-        screenshots: config.enableScreenshots,
-        axeSourceFile: 'third_party/axe/axe.min.js',
-      ));
-    }
+    // TODO: Enable Axe audit once axe.min.js is properly bundled
+    // if (config.enableAccessibility) {
+    //   rawAudits.add(A11yAxeAudit(
+    //     screenshots: config.enableScreenshots,
+    //     axeSourceFile: 'third_party/axe/axe.min.js',
+    //   ));
+    // }
     
-    return audits;
+    // Wrap all audits in SafeAudit for error handling
+    return rawAudits.map((audit) => SafeAudit(audit)).toList();
   }
   
   EngineEvent _convertAuditEvent(AuditEvent event) {
@@ -252,145 +273,6 @@ class DesktopIntegration {
       timestamp: DateTime.now(),
     );
   }
-  
-  /// Run simple HTTP audit when browser is not available
-  Future<void> _runSimpleHttpAudit(
-    List<Uri> urls,
-    JsonWriter writer,
-    StreamController<AuditEvent> eventController,
-  ) async {
-    final allResults = <Map<String, dynamic>>[];
-    final startTime = DateTime.now();
-    int successCount = 0;
-    int failCount = 0;
-    
-    for (final url in urls) {
-      // Emit start event
-      eventController.add(PageStarted(url));
-      
-      try {
-        // Perform enhanced HTTP audit
-        final result = await SimpleHttpAudit.auditUrlEnhanced(url.toString());
-        
-        // Store full result for PDF
-        allResults.add(result);
-        
-        // Write result to JSON
-        await writer.write({
-          'url': url.toString(),
-          'timestamp': DateTime.now().toIso8601String(),
-          'http': result['audits']['http'],
-          'perf': result['audits']['performance'],
-          'seo': result['audits']['seo'],
-          'content': result['audits']['content'],
-          'scores': result['scores'],
-          'recommendations': result['recommendations'],
-        });
-        
-        if (result['success'] == true) {
-          successCount++;
-        } else {
-          failCount++;
-        }
-        
-        // Emit finish event
-        eventController.add(PageFinished(url));
-      } catch (e) {
-        failCount++;
-        // Emit error event
-        eventController.add(PageError(url, e.toString()));
-        allResults.add({
-          'url': url.toString(),
-          'success': false,
-          'error': e.toString(),
-        });
-      }
-    }
-    
-    // Write summary
-    await writer.writeSummary();
-    
-    // Generate PDF report
-    try {
-      final endTime = DateTime.now();
-      final duration = endTime.difference(startTime);
-      
-      final pdfData = {
-        'url': urls.isNotEmpty ? urls.first.host : 'Website',
-        'totalPages': urls.length,
-        'successfulPages': successCount,
-        'failedPages': failCount,
-        'duration': '${duration.inSeconds}s',
-        'results': allResults,
-        'performanceScore': _calculateAverageScore(allResults, 'performanceScore'),
-        'seoScore': _calculateAverageScore(allResults, 'seoScore'),
-        'a11yScore': _calculateAverageScore(allResults, 'a11yScore'),
-        'bestPracticesScore': _calculateAverageScore(allResults, 'bestPracticesScore'),
-        'recommendations': _aggregateRecommendations(allResults),
-      };
-      
-      // Generate enhanced PDF report for first URL with date-based filename
-      if (allResults.isNotEmpty) {
-        final firstResult = allResults.first;
-        
-        // Extract domain for filename
-        String domainName = 'website';
-        try {
-          final uri = Uri.parse(urls.first.toString());
-          domainName = uri.host.replaceAll('www.', '').replaceAll('.', '_');
-        } catch (_) {
-          domainName = 'website';
-        }
-        
-        // Create date-based filename (will overwrite if same day)
-        final dateStr = DateTime.now().toIso8601String().split('T')[0]; // YYYY-MM-DD
-        final pdfPath = '${writer.baseDir.path}/${domainName}_report_$dateStr.pdf';
-        
-        await PdfReportGeneratorEnhanced.generateReport(
-          auditData: firstResult,
-          outputPath: pdfPath,
-          url: urls.isNotEmpty ? urls.first.toString() : 'Website',
-        );
-        
-        print('PDF report generated successfully at: $pdfPath');
-      }
-      
-      // Message already printed above
-    } catch (e) {
-      print('Failed to generate PDF report: $e');
-    }
-  }
-  
-  int _calculateAverageScore(List<Map<String, dynamic>> results, String scoreKey) {
-    final scores = results
-        .where((r) => r['scores'] != null && r['scores'][scoreKey] != null)
-        .map((r) => r['scores'][scoreKey] as num)
-        .toList();
-    
-    if (scores.isEmpty) return 0;
-    return (scores.reduce((a, b) => a + b) / scores.length).round();
-  }
-  
-  Map<String, List<Map<String, dynamic>>> _aggregateRecommendations(List<Map<String, dynamic>> results) {
-    final high = <Map<String, dynamic>>[];
-    final medium = <Map<String, dynamic>>[];
-    final low = <Map<String, dynamic>>[];
-    
-    for (final result in results) {
-      if (result['recommendations'] != null) {
-        final recs = result['recommendations'] as Map<String, dynamic>;
-        if (recs['high'] != null) high.addAll(List<Map<String, dynamic>>.from(recs['high']));
-        if (recs['medium'] != null) medium.addAll(List<Map<String, dynamic>>.from(recs['medium']));
-        if (recs['low'] != null) low.addAll(List<Map<String, dynamic>>.from(recs['low']));
-      }
-    }
-    
-    return {
-      'high': high,
-      'medium': medium,
-      'low': low,
-    };
-  }
 }
 
 /// Configuration for an audit session
@@ -425,7 +307,7 @@ class AuditConfiguration {
     this.delayMs = 0,
     this.rateLimit,
     this.performanceBudget = 'default',
-    this.skipRedirects = true,
+    this.skipRedirects = false,
     this.maxRedirectsToFollow = 5,
     this.enablePerformance = true,
     this.enableSEO = true,

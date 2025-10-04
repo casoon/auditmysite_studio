@@ -63,7 +63,7 @@ class RedirectStatistics {
   void addRedirect(RedirectInfo info) {
     redirects.add(info);
     redirectedUrls.add(info.originalUrl);
-    skippedUrls.add(info.originalUrl);
+    // DON'T automatically skip - let the audit process handle it
   }
   
   bool isRedirected(Uri url) => redirectedUrls.contains(url);
@@ -152,8 +152,9 @@ class RedirectHandler {
       // Check if we were redirected
       final currentUrl = Uri.parse(page.url ?? url.toString());
       
-      if (currentUrl != url) {
-        // We were redirected
+      // Log redirect if URL changed (for 301, 302, etc.)
+      if (chain.isNotEmpty || currentUrl.toString() != url.toString()) {
+        // We were redirected - log it but CONTINUE processing the final URL
         redirectInfo = RedirectInfo(
           originalUrl: url,
           finalUrl: currentUrl,
@@ -163,7 +164,10 @@ class RedirectHandler {
           chain: chain,
         );
         
-        stats.addRedirect(redirectInfo);
+        // Track the redirect but DON'T skip the URL
+        stats.redirects.add(redirectInfo);
+        stats.redirectedUrls.add(url);
+        // Note: NOT adding to skippedUrls!
         
         if (controller != null) {
           controller.add(PageRedirected(url, currentUrl, redirectInfo));
@@ -264,8 +268,9 @@ class RedirectHandler {
   
   /// Check if a URL should be skipped due to redirect
   bool shouldSkip(Uri url) {
-    if (!skipRedirects) return false;
-    return stats.isRedirected(url);
+    // NEVER skip URLs just because they redirect
+    // We want to audit the final destination
+    return false;
   }
   
   /// Get summary for reports

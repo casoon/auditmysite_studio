@@ -191,11 +191,12 @@ class _AuditScreenState extends ConsumerState<AuditScreen> {
       await _saveDomain(_urls.first);
     }
     
-    // Extract domain name for folder
+    // Extract domain name for folder (keep original domain format)
     String domainFolder = 'unknown';
     try {
       final uri = Uri.parse(_urls.first);
-      domainFolder = uri.host.replaceAll('www.', '').replaceAll('.', '_');
+      // Keep the full domain, only remove www. prefix
+      domainFolder = uri.host.replaceAll('www.', '');
     } catch (_) {
       domainFolder = 'unknown_${DateTime.now().millisecondsSinceEpoch}';
     }
@@ -225,8 +226,11 @@ class _AuditScreenState extends ConsumerState<AuditScreen> {
       // Store session in provider
       ref.read(auditSessionProvider.notifier).state = session;
       
-      // Start monitoring progress
-      ref.read(auditProgressProvider.notifier).startMonitoring(_urls.length);
+      // Start monitoring progress with direct event stream
+      ref.read(auditProgressProvider.notifier).startMonitoring(
+        _urls.length,
+        session.eventStream,
+      );
       
       // Wait for completion
       await session.processFuture;

@@ -81,20 +81,21 @@ class AuditQueue {
         controller.add(PageQueued(url));
         
         // First check if this URL will redirect
-        final page = await browserPool.newPage();
+        final page = await browserPool.acquire();
         final redirectInfo = await redirectHandler.detectRedirect(page, url, controller);
         
-        if (redirectInfo != null && skipRedirects) {
-          // Skip this URL, it's a redirect
+        // If redirect detected, audit the FINAL URL instead
+        final urlToAudit = redirectInfo?.finalUrl ?? url;
+        
+        if (redirectInfo != null) {
+          // Count the redirect but continue with final URL
           skippedRedirects.add(url);
-          controller.add(PageSkipped(url, 'Redirect detected to ${redirectInfo.finalUrl}'));
-          await page.close();
-          continue;
+          print('[REDIRECT] ${url} -> ${redirectInfo.finalUrl} (will audit final URL)');
         }
         
-        // Process the page normally
-        await _processPageWithRetry(url, controller, runId, page);
-        processedUrls.add(url);
+        // Process the final destination URL
+        await _processPageWithRetry(urlToAudit, controller, runId, page);
+        processedUrls.add(urlToAudit);
       }
     }
 
@@ -147,7 +148,7 @@ class AuditQueue {
         
         final pageStartTime = DateTime.now();
         
-        final page = existingPage ?? await browserPool.newPage();
+        final page = existingPage ?? await browserPool.acquire();
         controller.add(PageStarted(url));
         
         final ctx = AuditContext(
@@ -181,7 +182,7 @@ class AuditQueue {
         );
         
         await writer.write(ctx.buildResult());
-        await page.close();
+        browserPool.release(page);
         controller.add(PageFinished(url));
         
         return; // Success!
