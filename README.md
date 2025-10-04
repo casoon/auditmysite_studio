@@ -18,6 +18,7 @@ A comprehensive **desktop application** for website auditing, built with Flutter
 - **Professional UI**: Modern, responsive Flutter desktop interface  
 - **Comprehensive Audits**: 6 audit categories with detailed scoring
 - **Real-time Progress**: Live WebSocket updates during audits
+- **Future Vision**: Eventually provide a unified Dart codebase for both Desktop and CLI tools
 
 ## ✨ Current Features (v0.1-alpha)
 
@@ -40,11 +41,13 @@ A comprehensive **desktop application** for website auditing, built with Flutter
 
 ```
 auditmysite_studio/
-├── auditmysite_engine/     # Dart audit engine (HTTP API + WebSocket)
+├── auditmysite_engine/     # Dart audit engine (embedded in desktop app)
 ├── auditmysite_studio/     # Flutter desktop application  
-├── auditmysite_cli/        # Command-line interface
+├── auditmysite_cli/        # Command-line interface (OBSOLETE - see note)
 └── shared/                 # Shared models and utilities
 ```
+
+> ⚠️ **Note on CLI**: The `auditmysite_cli` directory contains an experimental Dart CLI tool that is currently **obsolete**. For production CLI usage, please use the [original Node.js tool](https://github.com/casoon/auditmysite). In the future, this Dart implementation may replace the npm tool, providing a unified codebase for both desktop and CLI.
 
 ### **Engine Features**:
 - REST API for audit management
@@ -200,20 +203,20 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📋 Detailed Technical Guide
 
-A comprehensive website auditing system with three main components:
+A comprehensive website auditing system focused on **desktop experience**:
 
-- **auditmysite_engine** (Dart): Loads sitemaps, performs audits via CDP + axe-core
-- **auditmysite_cli** (Dart): Creates HTML reports from JSON artifacts  
-- **auditmysite_studio** (Flutter Desktop): GUI for end users
+- **auditmysite_engine** (Dart): Embedded audit engine with Puppeteer, performs audits via CDP
+- **auditmysite_studio** (Flutter Desktop): Native desktop GUI for macOS and Windows
+- **auditmysite_cli** (Dart): Experimental CLI tool (OBSOLETE - use [casoon/auditmysite](https://github.com/casoon/auditmysite) for production CLI)
 
 ### Technical Architecture
 
 ```
 auditmysite_studio/
 ├─ shared/                    # Shared models & utilities
-├─ auditmysite_engine/        # Dart engine (Sitemap → Queue → CDP + axe)
-├─ auditmysite_cli/           # CLI: JSON → HTML reports
-└─ auditmysite_studio/        # Flutter desktop GUI
+├─ auditmysite_engine/        # Dart engine (Sitemap → Queue → CDP, PDF generation)
+├─ auditmysite_cli/           # CLI: JSON → HTML reports (OBSOLETE)
+└─ auditmysite_studio/        # Flutter desktop GUI (main application)
 ```
 
 ### Development Setup (Detailed)
