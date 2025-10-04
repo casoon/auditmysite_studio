@@ -234,10 +234,16 @@ class PdfReportGenerator {
               widgets.addAll(section.build());
             }
             
-            if (pageData['accessibility'] != null || pageData['a11y'] != null) {
-              final a11yData = pageData['accessibility'] ?? pageData['a11y'];
+            // Accessibility section with all data sources
+            if (pageData['wcag21'] != null || pageData['aria'] != null || pageData['a11y'] != null) {
+              final a11yData = {
+                'wcag21': pageData['wcag21'],
+                'aria': pageData['aria'],
+                'a11y': pageData['a11y'],
+              };
               final section = AccessibilitySection(a11yData);
               widgets.addAll(section.build());
+              widgets.add(pw.SizedBox(height: 30));
             }
             
             return widgets;

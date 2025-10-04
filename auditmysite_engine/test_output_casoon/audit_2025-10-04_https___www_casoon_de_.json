@@ -1,0 +1,1431 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "2025-10-04T11-15-55_849174",
+  "url": "https://www.casoon.de/",
+  "http": {
+    "statusCode": 204,
+    "headers": {
+      "content-type": "text/plain",
+      "server": "cloudflare"
+    },
+    "redirectedTo": null,
+    "navigationError": null,
+    "responseTimeMs": 1060,
+    "redirectCount": 0,
+    "redirectChain": [],
+    "ssl": {
+      "protocol": "https:",
+      "isSecure": true,
+      "error": "Could not retrieve detailed SSL info"
+    }
+  },
+  "perf": {
+    "ttfbMs": null,
+    "fcpMs": null,
+    "lcpMs": null,
+    "domContentLoadedMs": null,
+    "loadEventEndMs": null,
+    "engine": {
+      "cpuUserMs": null,
+      "cpuSystemMs": null,
+      "peakRssBytes": 616820736,
+      "taskDurationMs": 5255.164
+    }
+  },
+  "performance": {
+    "metrics": {
+      "lcp": 0,
+      "fcp": 0,
+      "cls": 0,
+      "fid": 0,
+      "inp": 0,
+      "ttfb": 67,
+      "domContentLoaded": 214,
+      "loadComplete": 289,
+      "firstPaint": 619,
+      "firstContentfulPaint": 619,
+      "domInteractive": 180,
+      "dns": 0,
+      "tcp": 0,
+      "ssl": 0,
+      "serverResponse": 69,
+      "transferSize": 6774,
+      "encodedBodySize": 6474,
+      "decodedBodySize": 30509,
+      "tbt": 0.0,
+      "speedIndex": 388.0,
+      "resourceTimings": [
+        {
+          "name": "https://www.casoon.de/_assets/index.gWqog_7L.css",
+          "type": "link",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 17343,
+          "decodedBodySize": 93014,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "css"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/index.BZA2XM-p.css",
+          "type": "link",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 15253,
+          "decodedBodySize": 82907,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "css"
+        },
+        {
+          "name": "https://www.casoon.de/logo.svg",
+          "type": "img",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 2303,
+          "decodedBodySize": 8849,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "image"
+        },
+        {
+          "name": "https://www.casoon.de/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+          "type": "script",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 611,
+          "decodedBodySize": 1239,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "javascript"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/AnimatedCanvas.astro_astro_type_script_index_0_lang.EHdFphnb.js",
+          "type": "script",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 1901,
+          "decodedBodySize": 5387,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "javascript"
+        },
+        {
+          "name": "https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015",
+          "type": "script",
+          "startTime": 171,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 0,
+          "decodedBodySize": 0,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 171,
+          "category": "other"
+        },
+        {
+          "name": "https://www.casoon.de/jet/s.js?z=JTdCJTIyZXhlY3V0ZWQlMjIlM0ElNUIlNUQlMkMlMjJ0JTIyJTNBJTIyRGlnaXRhbGUlMjBUcmFuc2Zvcm1hdGlvbiUyMGVpbmZhY2glMjBnZW1hY2h0JTIwJTdDJTIwQ0FTT09OJTIyJTJDJTIyeCUyMiUzQTAuMDEzMzIwMjM4Nzc5ODg0NzUyJTJDJTIydyUyMiUzQTE5MjAlMkMlMjJoJTIyJTNBMTA4MCUyQyUyMmolMjIlM0ExMDgwJTJDJTIyZSUyMiUzQTE5MjAlMkMlMjJsJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZ3d3cuY2Fzb29uLmRlJTJGJTIyJTJDJTIyciUyMiUzQSUyMiUyMiUyQyUyMmslMjIlM0EyNCUyQyUyMm4lMjIlM0ElMjJVVEYtOCUyMiUyQyUyMm8lMjIlM0EtMTIwJTJDJTIycSUyMiUzQSU1QiU1RCU3RA==",
+          "type": "script",
+          "startTime": 214,
+          "duration": 67,
+          "transferSize": 2573,
+          "encodedBodySize": 2273,
+          "decodedBodySize": 5637,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 41,
+          "download": 5,
+          "category": "other"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/inter-latin-400-normal.C38fXH4l.woff2",
+          "type": "css",
+          "startTime": 214,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 23664,
+          "decodedBodySize": 23664,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "font"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/inter-latin-500-normal.Cerq10X2.woff2",
+          "type": "css",
+          "startTime": 214,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 24272,
+          "decodedBodySize": 24272,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "font"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/inter-latin-600-normal.LgqL8muc.woff2",
+          "type": "css",
+          "startTime": 215,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 24452,
+          "decodedBodySize": 24452,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "font"
+        },
+        {
+          "name": "https://www.casoon.de/_assets/outfit-latin-600-normal.B7SfZ07L.woff2",
+          "type": "css",
+          "startTime": 215,
+          "duration": 0,
+          "transferSize": 0,
+          "encodedBodySize": 14140,
+          "decodedBodySize": 14140,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 0,
+          "download": 0,
+          "category": "font"
+        },
+        {
+          "name": "https://www.casoon.de/cdn-cgi/rum?",
+          "type": "xmlhttprequest",
+          "startTime": 290,
+          "duration": 27,
+          "transferSize": 300,
+          "encodedBodySize": 0,
+          "decodedBodySize": 0,
+          "dns": 0,
+          "tcp": 0,
+          "ttfb": 24,
+          "download": 1,
+          "category": "ajax"
+        }
+      ]
+    },
+    "score": 100.0,
+    "grade": "A",
+    "budgetAnalysis": {
+      "budget": "default",
+      "description": "Google Web Vitals Standard - Recommended baseline for all websites",
+      "metrics": {
+        "lcp": {
+          "value": 0.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 2500.0,
+            "needsWork": 4000.0,
+            "max": 6000.0
+          },
+          "unit": "ms"
+        },
+        "fcp": {
+          "value": 0.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 1800.0,
+            "needsWork": 3000.0,
+            "max": 4500.0
+          },
+          "unit": "ms"
+        },
+        "cls": {
+          "value": 0.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 0.1,
+            "needsWork": 0.25,
+            "max": 0.5
+          },
+          "unit": "score"
+        },
+        "inp": {
+          "value": 0.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 200.0,
+            "needsWork": 500.0,
+            "max": 1000.0
+          },
+          "unit": "ms"
+        },
+        "ttfb": {
+          "value": 67.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 800.0,
+            "needsWork": 1800.0,
+            "max": 3000.0
+          },
+          "unit": "ms"
+        },
+        "tbt": {
+          "value": 0.0,
+          "status": "good",
+          "passes": true,
+          "threshold": {
+            "good": 200.0,
+            "needsWork": 600.0,
+            "max": 1500.0
+          },
+          "unit": "ms"
+        }
+      },
+      "score": 100.0,
+      "grade": "A",
+      "passes": true,
+      "failures": [],
+      "warnings": []
+    },
+    "recommendations": [],
+    "resourceTimings": [
+      {
+        "name": "https://www.casoon.de/_assets/index.gWqog_7L.css",
+        "type": "link",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 17343,
+        "decodedBodySize": 93014,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "css"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/index.BZA2XM-p.css",
+        "type": "link",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 15253,
+        "decodedBodySize": 82907,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "css"
+      },
+      {
+        "name": "https://www.casoon.de/logo.svg",
+        "type": "img",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 2303,
+        "decodedBodySize": 8849,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "image"
+      },
+      {
+        "name": "https://www.casoon.de/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+        "type": "script",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 611,
+        "decodedBodySize": 1239,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "javascript"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/AnimatedCanvas.astro_astro_type_script_index_0_lang.EHdFphnb.js",
+        "type": "script",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 1901,
+        "decodedBodySize": 5387,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "javascript"
+      },
+      {
+        "name": "https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015",
+        "type": "script",
+        "startTime": 171,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 0,
+        "decodedBodySize": 0,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 171,
+        "category": "other"
+      },
+      {
+        "name": "https://www.casoon.de/jet/s.js?z=JTdCJTIyZXhlY3V0ZWQlMjIlM0ElNUIlNUQlMkMlMjJ0JTIyJTNBJTIyRGlnaXRhbGUlMjBUcmFuc2Zvcm1hdGlvbiUyMGVpbmZhY2glMjBnZW1hY2h0JTIwJTdDJTIwQ0FTT09OJTIyJTJDJTIyeCUyMiUzQTAuMDEzMzIwMjM4Nzc5ODg0NzUyJTJDJTIydyUyMiUzQTE5MjAlMkMlMjJoJTIyJTNBMTA4MCUyQyUyMmolMjIlM0ExMDgwJTJDJTIyZSUyMiUzQTE5MjAlMkMlMjJsJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZ3d3cuY2Fzb29uLmRlJTJGJTIyJTJDJTIyciUyMiUzQSUyMiUyMiUyQyUyMmslMjIlM0EyNCUyQyUyMm4lMjIlM0ElMjJVVEYtOCUyMiUyQyUyMm8lMjIlM0EtMTIwJTJDJTIycSUyMiUzQSU1QiU1RCU3RA==",
+        "type": "script",
+        "startTime": 214,
+        "duration": 67,
+        "transferSize": 2573,
+        "encodedBodySize": 2273,
+        "decodedBodySize": 5637,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 41,
+        "download": 5,
+        "category": "other"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/inter-latin-400-normal.C38fXH4l.woff2",
+        "type": "css",
+        "startTime": 214,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 23664,
+        "decodedBodySize": 23664,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "font"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/inter-latin-500-normal.Cerq10X2.woff2",
+        "type": "css",
+        "startTime": 214,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 24272,
+        "decodedBodySize": 24272,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "font"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/inter-latin-600-normal.LgqL8muc.woff2",
+        "type": "css",
+        "startTime": 215,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 24452,
+        "decodedBodySize": 24452,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "font"
+      },
+      {
+        "name": "https://www.casoon.de/_assets/outfit-latin-600-normal.B7SfZ07L.woff2",
+        "type": "css",
+        "startTime": 215,
+        "duration": 0,
+        "transferSize": 0,
+        "encodedBodySize": 14140,
+        "decodedBodySize": 14140,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 0,
+        "download": 0,
+        "category": "font"
+      },
+      {
+        "name": "https://www.casoon.de/cdn-cgi/rum?",
+        "type": "xmlhttprequest",
+        "startTime": 290,
+        "duration": 27,
+        "transferSize": 300,
+        "encodedBodySize": 0,
+        "decodedBodySize": 0,
+        "dns": 0,
+        "tcp": 0,
+        "ttfb": 24,
+        "download": 1,
+        "category": "ajax"
+      }
+    ]
+  },
+  "seo": {
+    "score": 56.5,
+    "grade": "F",
+    "title": {
+      "present": true,
+      "content": "Digitale Transformation einfach gemacht | CASOON",
+      "length": 48,
+      "optimal": true,
+      "issues": [],
+      "recommendations": []
+    },
+    "metaDescription": {
+      "present": true,
+      "content": "Freelancer für moderne Webentwicklung & digitale Lösungen",
+      "length": 57,
+      "optimal": false,
+      "issues": [
+        {
+          "type": "description-short",
+          "severity": "warning",
+          "message": "Description is too short (57 characters)"
+        }
+      ],
+      "recommendations": [
+        "Expand description to 120-160 characters"
+      ]
+    },
+    "headings": {
+      "h1Count": 0,
+      "h2Count": 5,
+      "h3Count": 19,
+      "hierarchyValid": false,
+      "issues": [
+        {
+          "type": "h1-missing",
+          "severity": "error",
+          "message": "No H1 tag found"
+        }
+      ],
+      "recommendations": [
+        "Add a single H1 tag with main topic"
+      ]
+    },
+    "images": {
+      "total": 1,
+      "withAlt": 1,
+      "withoutAlt": 0,
+      "lazyLoaded": 0,
+      "score": 100,
+      "issues": [],
+      "recommendations": [
+        "Consider lazy loading images to improve performance"
+      ]
+    },
+    "links": {
+      "internal": 10,
+      "external": 2,
+      "total": 13,
+      "nofollow": 0,
+      "linkRatio": 77,
+      "recommendations": []
+    },
+    "content": {
+      "wordCount": 243,
+      "qualityScore": 30,
+      "recommendations": [
+        "Content is too short. Aim for at least 300 words"
+      ]
+    },
+    "readabilityScore": 0.0,
+    "keywords": {
+      "topKeywords": [
+        {
+          "word": "transformation",
+          "count": 4,
+          "density": "2.33"
+        },
+        {
+          "word": "moderne",
+          "count": 4,
+          "density": "2.33"
+        },
+        {
+          "word": "marketing",
+          "count": 3,
+          "density": "1.74"
+        },
+        {
+          "word": "digitale",
+          "count": 3,
+          "density": "1.74"
+        },
+        {
+          "word": "zusammenarbeit",
+          "count": 2,
+          "density": "1.16"
+        },
+        {
+          "word": "umsetzung",
+          "count": 2,
+          "density": "1.16"
+        },
+        {
+          "word": "ihre",
+          "count": 2,
+          "density": "1.16"
+        },
+        {
+          "word": "impressum",
+          "count": 2,
+          "density": "1.16"
+        },
+        {
+          "word": "datenschutz",
+          "count": 2,
+          "density": "1.16"
+        },
+        {
+          "word": "lsungen",
+          "count": 2,
+          "density": "1.16"
+        }
+      ],
+      "totalWords": 172
+    },
+    "semantic": {
+      "semanticScore": 35,
+      "topicClusters": [],
+      "contentDepthScore": 50
+    },
+    "voiceSearch": {
+      "voiceSearchScore": 0,
+      "questionPhrases": 0,
+      "conversationalContent": false,
+      "recommendations": [
+        "Add question-based content for voice search optimization",
+        "Use more conversational language"
+      ]
+    },
+    "eat": {
+      "eatScore": 40,
+      "signals": [
+        "Author in structured data"
+      ]
+    },
+    "searchVisibility": {
+      "score": 44,
+      "likelihood": "medium"
+    },
+    "openGraph": {
+      "type": "website",
+      "title": "Digitale Transformation einfach gemacht | CASOON",
+      "description": "Digitale Transformation einfach gemacht | CASOON",
+      "url": "https://casoon.de/",
+      "site_name": "CASOON",
+      "locale": "de_DE",
+      "image": "https://casoon.de/logo.svg",
+      "image:width": "512",
+      "image:height": "512",
+      "image:alt": "CASOON Logo"
+    },
+    "twitterCard": {
+      "card": "summary",
+      "title": "Digitale Transformation einfach gemacht | CASOON",
+      "description": "Digitale Transformation einfach gemacht | CASOON",
+      "image": "https://casoon.de/logo.svg",
+      "image:alt": "CASOON Logo",
+      "creator": "@casoon_de",
+      "site": "@casoon_de"
+    },
+    "structuredData": [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Digitale Transformation einfach gemacht | CASOON",
+        "description": "Digitale Transformation einfach gemacht | CASOON",
+        "url": "https://casoon.de/",
+        "dateModified": "2025-10-04",
+        "author": {
+          "@type": "Person",
+          "name": "Jörn Seidel",
+          "url": "https://casoon.de",
+          "jobTitle": "Freelancer für Web Development & UX Design"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "CASOON",
+          "url": "https://casoon.de",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://casoon.de/logo.svg",
+            "width": 512,
+            "height": 512
+          }
+        },
+        "inLanguage": "de-DE",
+        "isAccessibleForFree": true
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://casoon.de"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Digitale Transformation einfach gemacht | CASOON",
+            "item": "https://casoon.de/"
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "type": "description-short",
+        "severity": "warning",
+        "message": "Description is too short (57 characters)"
+      }
+    ],
+    "recommendations": [
+      "Expand description to 120-160 characters"
+    ],
+    "textToCodeRatio": 8.143969744559469
+  },
+  "contentWeight": {
+    "summary": {
+      "totalSize": 280797,
+      "totalSizeFormatted": "274.2 KB",
+      "totalRequests": 12,
+      "avgRequestSize": "22.9 KB"
+    },
+    "resourcesByType": {
+      "css": {
+        "count": 2,
+        "totalSize": 175921,
+        "avgDuration": 0,
+        "resources": [
+          {
+            "url": "https://www.casoon.de/_assets/index.gWqog_7L.css",
+            "size": 93014,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/_assets/index.BZA2XM-p.css",
+            "size": 82907,
+            "duration": 0,
+            "cached": true
+          }
+        ]
+      },
+      "image": {
+        "count": 1,
+        "totalSize": 8849,
+        "avgDuration": 0,
+        "resources": [
+          {
+            "url": "https://www.casoon.de/logo.svg",
+            "size": 8849,
+            "duration": 0,
+            "cached": true
+          }
+        ]
+      },
+      "javascript": {
+        "count": 3,
+        "totalSize": 9199,
+        "avgDuration": 15,
+        "resources": [
+          {
+            "url": "https://www.casoon.de/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js",
+            "size": 1239,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/_assets/AnimatedCanvas.astro_astro_type_script_index_0_lang.EHdFphnb.js",
+            "size": 5387,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/jet/s.js?z=JTdCJTIyZXhlY3V0ZWQlMjIlM0ElNUIlNUQlMkMlMjJ0JTIyJTNBJTIyRGlnaXRhbGUlMjBUcmFuc2Zvcm1hdGlvbiUyMGVpbmZhY2glMjBnZW1hY2h0JTIwJTdDJTIwQ0FTT09OJTIyJTJDJTIyeCUyMiUzQTAuMDEzMzIwMjM4Nzc5ODg0NzUyJTJDJTIydyUyMiUzQTE5MjAlMkMlMjJoJTIyJTNBMTA4MCUyQyUyMmolMjIlM0ExMDgwJTJDJTIyZSUyMiUzQTE5MjAlMkMlMjJsJTIyJTNBJTIyaHR0cHMlM0ElMkYlMkZ3d3cuY2Fzb29uLmRlJTJGJTIyJTJDJTIyciUyMiUzQSUyMiUyMiUyQyUyMmslMjIlM0EyNCUyQyUyMm4lMjIlM0ElMjJVVEYtOCUyMiUyQyUyMm8lMjIlM0EtMTIwJTJDJTIycSUyMiUzQSU1QiU1RCU3RA==",
+            "size": 2573,
+            "duration": 46,
+            "cached": false
+          }
+        ]
+      },
+      "other": {
+        "count": 1,
+        "totalSize": 0,
+        "avgDuration": 171,
+        "resources": [
+          {
+            "url": "https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015",
+            "size": 0,
+            "duration": 171.09999999403954,
+            "cached": true
+          }
+        ]
+      },
+      "font": {
+        "count": 4,
+        "totalSize": 86528,
+        "avgDuration": 0,
+        "resources": [
+          {
+            "url": "https://www.casoon.de/_assets/inter-latin-400-normal.C38fXH4l.woff2",
+            "size": 23664,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/_assets/inter-latin-500-normal.Cerq10X2.woff2",
+            "size": 24272,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/_assets/inter-latin-600-normal.LgqL8muc.woff2",
+            "size": 24452,
+            "duration": 0,
+            "cached": true
+          },
+          {
+            "url": "https://www.casoon.de/_assets/outfit-latin-600-normal.B7SfZ07L.woff2",
+            "size": 14140,
+            "duration": 0,
+            "cached": true
+          }
+        ]
+      },
+      "xhr": {
+        "count": 1,
+        "totalSize": 300,
+        "avgDuration": 24,
+        "resources": [
+          {
+            "url": "https://www.casoon.de/cdn-cgi/rum?",
+            "size": 300,
+            "duration": 24.19999998807907,
+            "cached": false
+          }
+        ]
+      }
+    },
+    "largeResources": [],
+    "slowResources": [],
+    "navigationTiming": {
+      "domContentLoaded": null,
+      "loadComplete": null,
+      "firstByte": null
+    },
+    "issues": [],
+    "recommendations": [],
+    "score": 100,
+    "grade": "A",
+    "timestamp": "2025-10-04T11:16:03.016258"
+  },
+  "contentQuality": {
+    "score": 80.0,
+    "grade": "B",
+    "metrics": {
+      "textContent": "                                   \nErfolgreich im Wandel\n        Transformation vorantreiben – mit Innovation, Technologie und praxisnaher Umsetzung entsteht der Fahrplan für Ihre Zukunft in Web, Commerce, CMS, Data und AI.             \nImpressum\n • \nDatenschutz\n           Starke Lösungen für Ihr Unternehmen       Webentwicklung      Schnelle, responsive Websites mit Fokus auf Nutzererlebnis.       E-Commerce      Professionelle Online-Shops mit integrierten Payment-Systemen.       SEO & Marketing      Suchmaschinenoptimierung und digitales Marketing für mehr Sichtbarkeit.       Beratung      Strategische Beratung für Ihre digitale Transformation.       Plattformübergreifende Apps      Eine Codebasis, viele Plattformen – effizient und konsistent.       Cloud-Entwicklung      Robuste Backends für Wachstum und Sicherheit.         Freelancer für moderne Softwareentwicklung       Arbeitsweise      Agile Methoden, offene Kommunikation und enge Abstimmung mit Ihnen.       Technologien      Go, Rust, Dart, Flutter, TypeScript, moderne Webframeworks.       USP      Kombination aus Hands-on-Umsetzung & strategischem Blick für digitale Transformation.       Kollaboration      Transparente Zusammenarbeit, direkter Draht und flexible Einbindung in bestehende Teams.         Insights             Marketing      Strategische Planung und Umsetzung digitaler Marketing-Kampagnen.             SEO      Suchmaschinenoptimierung für bessere Sichtbarkeit und Reichweite.             KI      Integration und Anwendung künstlicher Intelligenz in Geschäftsprozessen.             Sicherheit      Umfassende IT-Sicherheitskonzepte und Datenschutz-Lösungen.             Unternehmen      Digitale Transformation und moderne Unternehmensstrukturen.             Dev      Moderne Softwareentwicklung und agile Projektmethoden.         Kontakt             Gemeinsam Lösungen finden      Wenn Sie ein Angebot für einen Auftrag wünschen, Informationen anfordern, Hilfe benötigen oder sonst etwas mit dem Internet zu tun haben, zögern Sie nicht, mich zu kontaktieren. Als erfahrener Freelancer in Rostock, Mecklenburg-Vorpommern, unterstütze ich Sie gerne bei Ihren digitalen Projekten. E-Mail: info@casoon.de | Telefon: 0381 44 88 40         Social             LinkedIn      Vernetzen Sie sich mit mir für spannende Projekte, Branchennews und berufliche Zusammenarbeit.             GitHub      Entdecken Sie meine Open-Source-Projekte, Code-Beispiele und aktuelle Entwicklungsarbeiten.             \nImpressum\n • \nDatenschutz\n                ",
+      "wordCount": 243,
+      "sentenceCount": 23,
+      "paragraphCount": 20,
+      "avgWordsPerSentence": 10.6,
+      "avgWordsPerParagraph": 12.2,
+      "avgSentencesPerParagraph": 1.2,
+      "uniqueWords": 174,
+      "lexicalDiversity": "0.716",
+      "headingStructure": [
+        {
+          "level": 2,
+          "text": "Starke Lösungen für Ihr Unternehmen",
+          "wordCount": 5
+        },
+        {
+          "level": 3,
+          "text": "Webentwicklung",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "E-Commerce",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "SEO & Marketing",
+          "wordCount": 3
+        },
+        {
+          "level": 3,
+          "text": "Beratung",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Plattformübergreifende Apps",
+          "wordCount": 2
+        },
+        {
+          "level": 3,
+          "text": "Cloud-Entwicklung",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Freelancer für moderne Softwareentwicklung",
+          "wordCount": 4
+        },
+        {
+          "level": 3,
+          "text": "Arbeitsweise",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Technologien",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "USP",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Kollaboration",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Insights",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Marketing",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "SEO",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "KI",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Sicherheit",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Unternehmen",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Dev",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Kontakt",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Gemeinsam Lösungen finden",
+          "wordCount": 3
+        },
+        {
+          "level": 2,
+          "text": "Social",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "LinkedIn",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "GitHub",
+          "wordCount": 1
+        }
+      ],
+      "contentSections": [],
+      "listsCount": 0,
+      "tablesCount": 0,
+      "mediaCount": 1,
+      "codeBlocksCount": 0,
+      "quotesCount": 0,
+      "emphasisCount": 3,
+      "formElements": 0,
+      "properHeadingHierarchy": true,
+      "fleschReadingEase": 69,
+      "fleschKincaidGrade": 6.2,
+      "gunningFogIndex": 26,
+      "topKeywords": [
+        {
+          "word": "transformation",
+          "count": 4
+        },
+        {
+          "word": "moderne",
+          "count": 4
+        },
+        {
+          "word": "marketing",
+          "count": 3
+        },
+        {
+          "word": "digitale",
+          "count": 3
+        },
+        {
+          "word": "umsetzung",
+          "count": 2
+        },
+        {
+          "word": "ihre",
+          "count": 2
+        },
+        {
+          "word": "impressum",
+          "count": 2
+        },
+        {
+          "word": "datenschutz",
+          "count": 2
+        },
+        {
+          "word": "lsungen",
+          "count": 2
+        },
+        {
+          "word": "unternehmen",
+          "count": 2
+        }
+      ]
+    },
+    "issues": [
+      {
+        "type": "thin-content",
+        "severity": "error",
+        "message": "Content is too thin (243 words). Aim for at least 500 words."
+      }
+    ],
+    "recommendations": [
+      "Expand your content to at least 500-1000 words for better SEO value"
+    ],
+    "readability": {
+      "fleschReadingEase": 69,
+      "fleschKincaidGrade": 6.2,
+      "gunningFogIndex": 26,
+      "interpretation": "Standard readability (8th-9th grade) | Grade level: 6.2"
+    },
+    "contentStructure": {
+      "headings": [
+        {
+          "level": 2,
+          "text": "Starke Lösungen für Ihr Unternehmen",
+          "wordCount": 5
+        },
+        {
+          "level": 3,
+          "text": "Webentwicklung",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "E-Commerce",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "SEO & Marketing",
+          "wordCount": 3
+        },
+        {
+          "level": 3,
+          "text": "Beratung",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Plattformübergreifende Apps",
+          "wordCount": 2
+        },
+        {
+          "level": 3,
+          "text": "Cloud-Entwicklung",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Freelancer für moderne Softwareentwicklung",
+          "wordCount": 4
+        },
+        {
+          "level": 3,
+          "text": "Arbeitsweise",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Technologien",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "USP",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Kollaboration",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Insights",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Marketing",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "SEO",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "KI",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Sicherheit",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Unternehmen",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Dev",
+          "wordCount": 1
+        },
+        {
+          "level": 2,
+          "text": "Kontakt",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "Gemeinsam Lösungen finden",
+          "wordCount": 3
+        },
+        {
+          "level": 2,
+          "text": "Social",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "LinkedIn",
+          "wordCount": 1
+        },
+        {
+          "level": 3,
+          "text": "GitHub",
+          "wordCount": 1
+        }
+      ],
+      "sections": [],
+      "properHierarchy": true
+    },
+    "contentRichness": {
+      "lists": 0,
+      "tables": 0,
+      "media": 1,
+      "codeBlocks": 0,
+      "quotes": 0
+    },
+    "keywords": [
+      {
+        "word": "transformation",
+        "count": 4
+      },
+      {
+        "word": "moderne",
+        "count": 4
+      },
+      {
+        "word": "marketing",
+        "count": 3
+      },
+      {
+        "word": "digitale",
+        "count": 3
+      },
+      {
+        "word": "umsetzung",
+        "count": 2
+      },
+      {
+        "word": "ihre",
+        "count": 2
+      },
+      {
+        "word": "impressum",
+        "count": 2
+      },
+      {
+        "word": "datenschutz",
+        "count": 2
+      },
+      {
+        "word": "lsungen",
+        "count": 2
+      },
+      {
+        "word": "unternehmen",
+        "count": 2
+      }
+    ],
+    "lexicalDiversity": "0.716"
+  },
+  "mobile": {
+    "viewport": {
+      "exists": true,
+      "content": "width=device-width, initial-scale=1.0",
+      "isResponsive": true,
+      "hasUserScalable": true
+    },
+    "touchTargets": {
+      "total": 13,
+      "tooSmall": 2,
+      "details": [
+        {
+          "element": "a.text-gray-700",
+          "width": 82,
+          "height": 24,
+          "text": "Impressum",
+          "isTooSmall": true
+        },
+        {
+          "element": "a.text-gray-700",
+          "width": 93,
+          "height": 24,
+          "text": "Datenschutz",
+          "isTooSmall": true
+        }
+      ]
+    },
+    "textReadability": {
+      "totalElements": 178,
+      "smallTextElements": 1,
+      "averageFontSize": 17
+    },
+    "layout": {
+      "hasHorizontalScroll": false,
+      "pageWidth": 1920,
+      "viewportWidth": 1920
+    },
+    "images": {
+      "total": 1,
+      "nonResponsive": 1
+    },
+    "inputs": {
+      "total": 0,
+      "nonOptimized": 0
+    },
+    "issues": [
+      {
+        "category": "touch_targets",
+        "severity": "warning",
+        "message": "${smallTouchTargets} touch targets smaller than 44px",
+        "impact": "Small touch targets are difficult to tap on mobile",
+        "count": 2
+      },
+      {
+        "category": "responsive_images",
+        "severity": "warning",
+        "message": "${nonResponsiveImages}/${images.length} images may not be responsive",
+        "impact": "Non-responsive images can cause horizontal scrolling"
+      }
+    ],
+    "recommendations": [
+      {
+        "category": "touch_targets",
+        "priority": "high",
+        "message": "Increase touch target sizes to at least 44px",
+        "implementation": "Use CSS padding or min-width/min-height properties"
+      }
+    ],
+    "score": 86,
+    "grade": "B",
+    "timestamp": "2025-10-04T09:16:03.058Z"
+  },
+  "wcag21": {
+    "perceivable": {
+      "colorContrast": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "textAlternatives": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "captions": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "adaptable": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      }
+    },
+    "operable": {
+      "keyboardAccessible": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "seizures": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "navigable": {
+        "violations": 1,
+        "score": 90.0,
+        "issues": [
+          "No skip navigation link found"
+        ]
+      },
+      "inputModalities": {
+        "violations": 10,
+        "score": 0.0,
+        "issues": [
+          "10 touch targets smaller than 44x44 pixels"
+        ]
+      }
+    },
+    "understandable": {
+      "readable": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "predictable": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "inputAssistance": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      }
+    },
+    "robust": {
+      "compatible": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      },
+      "parsing": {
+        "violations": 0,
+        "score": 100.0,
+        "issues": []
+      }
+    },
+    "totalScore": 91.53846153846153,
+    "grade": "A"
+  },
+  "aria": {
+    "totalViolations": 5,
+    "landmarks": {
+      "present": [
+        "main"
+      ],
+      "missing": [
+        "navigation",
+        "banner",
+        "contentinfo",
+        "search",
+        "complementary"
+      ],
+      "score": 16.666666666666664
+    },
+    "roles": {
+      "correct": 0,
+      "incorrect": 0,
+      "missing": 0,
+      "score": 100.0,
+      "issues": []
+    },
+    "properties": {
+      "correct": 0,
+      "incorrect": 0,
+      "missing": 0,
+      "score": 100.0,
+      "issues": []
+    },
+    "liveRegions": {
+      "present": 0,
+      "appropriate": 0,
+      "score": 100.0,
+      "issues": []
+    },
+    "score": 79.16666666666666,
+    "grade": "C"
+  },
+  "form": null,
+  "keyboard": null,
+  "a11y": {
+    "error": "Evaluation failed: SyntaxError: Unexpected token '('"
+  },
+  "structuredData": null,
+  "securityHeaders": null,
+  "performanceBudget": "default",
+  "consoleErrors": [],
+  "screenshotPath": null,
+  "auditErrors": null,
+  "startedAt": "2025-10-04T11:15:58.172195",
+  "finishedAt": "2025-10-04T11:16:03.437289"
+}

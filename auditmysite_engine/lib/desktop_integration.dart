@@ -199,13 +199,13 @@ class DesktopIntegration {
       rawAudits.add(ARIAAudit());
     }
     
-    // TODO: Enable Axe audit once axe.min.js is properly bundled
-    // if (config.enableAccessibility) {
-    //   rawAudits.add(A11yAxeAudit(
-    //     screenshots: config.enableScreenshots,
-    //     axeSourceFile: 'third_party/axe/axe.min.js',
-    //   ));
-    // }
+    // Enable Axe audit for accessibility testing
+    if (config.enableAccessibility) {
+      rawAudits.add(A11yAxeAudit(
+        screenshots: config.enableScreenshots,
+        axeSourceFile: 'third_party/axe/axe.min.js',
+      ));
+    }
     
     // Wrap all audits in SafeAudit for error handling
     return rawAudits.map((audit) => SafeAudit(audit)).toList();

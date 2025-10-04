@@ -17,48 +17,130 @@ class AccessibilitySection extends PdfSection {
     // Section header
     widgets.add(PdfTemplate.buildSectionHeader(
       title,
-      subtitle: 'WCAG compliance and accessibility issues',
+      subtitle: 'WCAG 2.1 compliance and accessibility analysis',
     ));
     
-    // Score (handle both int and double from JSON)
-    final scoreValue = data['score'];
-    final score = scoreValue is num ? scoreValue.toInt() : 0;
-    widgets.add(pw.Row(
-      children: [
-        PdfTemplate.buildScoreBadge(score, size: 70),
-        pw.SizedBox(width: 20),
-        pw.Expanded(
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text(
-                'Accessibility Score',
-                style: pw.TextStyle(
-                  fontSize: 16,
-                  fontWeight: pw.FontWeight.bold,
+    // Get data from different sources
+    final wcag21 = data['wcag21'] as Map<String, dynamic>?;
+    final aria = data['aria'] as Map<String, dynamic>?;
+    final axe = data['a11y'] as Map<String, dynamic>?;
+    
+    // Overall Score from WCAG21
+    if (wcag21 != null) {
+      final scoreValue = wcag21['totalScore'];
+      final score = scoreValue is num ? scoreValue.toInt() : 0;
+      final grade = wcag21['grade'] ?? 'N/A';
+      
+      widgets.add(pw.Row(
+        children: [
+          PdfTemplate.buildScoreBadge(score, size: 70),
+          pw.SizedBox(width: 20),
+          pw.Expanded(
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.start,
+              children: [
+                pw.Text(
+                  'WCAG 2.1 Score: $grade',
+                  style: pw.TextStyle(
+                    fontSize: 16,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
                 ),
-              ),
-              pw.SizedBox(height: 4),
-              pw.Text(
-                _getComplianceLevel(score),
-                style: pw.TextStyle(
-                  fontSize: 10,
-                  color: PdfTemplate.subtleColor,
+                pw.SizedBox(height: 4),
+                pw.Text(
+                  _getComplianceLevel(score),
+                  style: pw.TextStyle(
+                    fontSize: 10,
+                    color: PdfTemplate.subtleColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    ));
+        ],
+      ));
     
-    widgets.add(pw.SizedBox(height: 20));
-    
-    // Violation summary by impact
-    if (data['violationsByImpact'] != null) {
-      final violations = data['violationsByImpact'] as Map<String, dynamic>;
+      
+      widgets.add(pw.SizedBox(height: 20));
+      
+      // WCAG 2.1 Principles Summary
       widgets.add(pw.Text(
-        'Violations by Impact',
+        'WCAG 2.1 Four Principles',
+        style: pw.TextStyle(
+          fontSize: 14,
+          fontWeight: pw.FontWeight.bold,
+        ),
+      ));
+      widgets.add(pw.SizedBox(height: 10));
+      
+      final principles = [
+        {'name': 'Perceivable', 'key': 'perceivable', 'icon': '⏺'},
+        {'name': 'Operable', 'key': 'operable', 'icon': '⚙'},
+        {'name': 'Understandable', 'key': 'understandable', 'icon': '📖'},
+        {'name': 'Robust', 'key': 'robust', 'icon': '🔧'},
+      ];
+      
+      for (final principle in principles) {
+        final key = principle['key'] as String;
+        final principleData = wcag21[key] as Map<String, dynamic>?;
+        if (principleData != null && principleData.isNotEmpty) {
+          final totalViolations = principleData.values
+              .where((v) => v is Map)
+              .map((v) => (v as Map)['violations'] ?? 0)
+              .fold<int>(0, (sum, v) => sum + (v as int));
+          
+          widgets.add(PdfTemplate.buildMetricCard(
+            '${principle['name']}',
+            '$totalViolations issues',
+            color: totalViolations == 0 ? PdfTemplate.successColor : PdfTemplate.warningColor,
+          ));
+        }
+      }
+      
+      widgets.add(pw.SizedBox(height: 20));
+    }
+    
+    // ARIA Landmarks
+    if (aria != null && aria['landmarks'] != null) {
+      final landmarks = aria['landmarks'] as Map<String, dynamic>;
+      final present = landmarks['present'] as List? ?? [];
+      final missing = landmarks['missing'] as List? ?? [];
+      
+      widgets.add(pw.Text(
+        'ARIA Landmarks',
+        style: pw.TextStyle(
+          fontSize: 14,
+          fontWeight: pw.FontWeight.bold,
+        ),
+      ));
+      widgets.add(pw.SizedBox(height: 10));
+      
+      widgets.add(pw.Row(
+        children: [
+          PdfTemplate.buildMetricCard(
+            'Present',
+            '${present.length}',
+            color: PdfTemplate.successColor,
+          ),
+          pw.SizedBox(width: 10),
+          PdfTemplate.buildMetricCard(
+            'Missing',
+            '${missing.length}',
+            color: missing.isEmpty ? PdfTemplate.successColor : PdfTemplate.warningColor,
+          ),
+        ],
+      ));
+      
+      widgets.add(pw.SizedBox(height: 20));
+    }
+    
+    // Axe-core Violations
+    if (axe != null && axe['summary'] != null) {
+      final summary = axe['summary'] as Map<String, dynamic>;
+      final violationsByImpact = summary['violationsByImpact'] as Map<String, dynamic>? ?? {};
+      
+      widgets.add(pw.Text(
+        'Axe-Core Analysis',
         style: pw.TextStyle(
           fontSize: 14,
           fontWeight: pw.FontWeight.bold,
@@ -70,30 +152,26 @@ class AccessibilitySection extends PdfSection {
         spacing: 10,
         runSpacing: 10,
         children: [
-          if (violations['critical'] != null)
-            PdfTemplate.buildMetricCard(
-              'Critical',
-              '${violations['critical']}',
-              color: PdfTemplate.errorColor,
-            ),
-          if (violations['serious'] != null)
-            PdfTemplate.buildMetricCard(
-              'Serious',
-              '${violations['serious']}',
-              color: PdfTemplate.warningColor,
-            ),
-          if (violations['moderate'] != null)
-            PdfTemplate.buildMetricCard(
-              'Moderate',
-              '${violations['moderate']}',
-              color: PdfTemplate.primaryColor,
-            ),
-          if (violations['minor'] != null)
-            PdfTemplate.buildMetricCard(
-              'Minor',
-              '${violations['minor']}',
-              color: PdfTemplate.subtleColor,
-            ),
+          PdfTemplate.buildMetricCard(
+            'Critical',
+            '${violationsByImpact['critical'] ?? 0}',
+            color: violationsByImpact['critical'] == 0 ? PdfTemplate.successColor : PdfTemplate.errorColor,
+          ),
+          PdfTemplate.buildMetricCard(
+            'Serious',
+            '${violationsByImpact['serious'] ?? 0}',
+            color: violationsByImpact['serious'] == 0 ? PdfTemplate.successColor : PdfTemplate.warningColor,
+          ),
+          PdfTemplate.buildMetricCard(
+            'Moderate',
+            '${violationsByImpact['moderate'] ?? 0}',
+            color: PdfTemplate.primaryColor,
+          ),
+          PdfTemplate.buildMetricCard(
+            'Minor',
+            '${violationsByImpact['minor'] ?? 0}',
+            color: PdfTemplate.subtleColor,
+          ),
         ],
       ));
       

@@ -303,7 +303,7 @@ class WCAG21Audit extends Audit {
     // Calculate scores for each principle
     final analysis = _calculateWCAG21Scores(wcagData);
     
-    // Store in context
+    // Store in context for JSON export
     ctx.wcag21Analysis = analysis;
   }
 

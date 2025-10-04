@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "1.0.0",
+  "runId": "2025-10-04T11-15-55_849174",
+  "startedAt": "2025-10-04T11:15:57.537354",
+  "finishedAt": "2025-10-04T11:16:03.462981",
+  "duration": {
+    "totalMs": 5925,
+    "formatted": "5s"
+  },
+  "pages": {
+    "total": 1,
+    "successful": 1,
+    "redirects": 0,
+    "errors": 0,
+    "crashed": 0,
+    "successRate": 100,
+    "httpStatusBreakdown": {
+      "204xx": 1
+    }
+  },
+  "violations": {
+    "total": 0,
+    "byImpact": {},
+    "avgPerPage": "0.0"
+  },
+  "performance": {
+    "totalPagesWithPerf": 1,
+    "averageScore": 100,
+    "scoreDistribution": {
+      "A (90-100)": 1,
+      "B (80-89)": 0,
+      "C (70-79)": 0,
+      "D (60-69)": 0,
+      "F (0-59)": 0
+    },
+    "issuesByType": {}
+  },
+  "seo": {
+    "totalPagesWithSeo": 1,
+    "averageScore": 56,
+    "scoreDistribution": {
+      "A (90-100)": 0,
+      "B (80-89)": 0,
+      "C (70-79)": 0,
+      "D (60-69)": 0,
+      "F (0-59)": 1
+    },
+    "issuesByCategory": {
+      "title": {},
+      "description": {
+        "description-short": 1
+      },
+      "headings": {},
+      "images": {}
+    },
+    "totalIssues": 1
+  },
+  "legacyPerf": {
+    "ttfb": {
+      "count": 0,
+      "avg": null,
+      "min": null,
+      "max": null,
+      "unit": "ms"
+    },
+    "fcp": {
+      "count": 0,
+      "avg": null,
+      "min": null,
+      "max": null,
+      "unit": "ms"
+    },
+    "lcp": {
+      "count": 0,
+      "avg": null,
+      "min": null,
+      "max": null,
+      "unit": "ms"
+    },
+    "domContentLoaded": {
+      "count": 0,
+      "avg": null,
+      "min": null,
+      "max": null,
+      "unit": "ms"
+    }
+  },
+  "engine": {
+    "taskDuration": {
+      "count": 1,
+      "avg": 5255,
+      "median": 5255,
+      "min": 5255,
+      "max": 5255,
+      "unit": "ms"
+    },
+    "peakRss": {
+      "count": 1,
+      "avg": 616820736,
+      "median": 616820736,
+      "min": 616820736,
+      "max": 616820736,
+      "unit": "bytes"
+    }
+  },
+  "urls": [
+    "https://www.casoon.de/"
+  ],
+  "totalUrls": 1,
+  "processedUrls": 1,
+  "skippedRedirects": 1,
+  "redirectStatistics": {
+    "redirectHandling": {
+      "enabled": false,
+      "maxRedirectsToFollow": 5,
+      "statistics": {
+        "totalRedirects": 1,
+        "httpRedirects": 1,
+        "javascriptRedirects": 0,
+        "metaRedirects": 0,
+        "redirects": [
+          {
+            "originalUrl": "https://www.casoon.de",
+            "finalUrl": "https://www.casoon.de/",
+            "statusCode": 302,
+            "type": "http_redirect",
+            "timestamp": "2025-10-04T11:15:58.029133",
+            "chain": []
+          }
+        ],
+        "skippedUrls": []
+      }
+    }
+  }
+}
