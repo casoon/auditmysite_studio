@@ -105,7 +105,7 @@ dart run bin/build.dart \
 - Vorteil: **Eine einzige Codebasis** für Desktop-App und CLI
 - Aktuell: Nutze **[casoon/auditmysite](https://github.com/casoon/auditmysite)** für produktive CLI-Nutzung
 
-📚 **Weitere Informationen**: Siehe [auditmysite_cli/CLI_STATUS.md](auditmysite_cli/CLI_STATUS.md)
+📚 **Weitere Informationen**: Siehe [auditmysite_cli/README.md](auditmysite_cli/README.md)
 
 ---
 
